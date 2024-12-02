@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#000000" />
+        <meta name="description" content="Dating, Chat & Flirts" />
+        <link rel="apple-touch-icon" href="%PUBLIC_URL%/favicon.ico" />
+        <!-- <meta name="apple-itunes-app" content="app-id=" />
+        <meta name="p:domain_verify" content=""/>
+        <meta name="google-site-verification" content="" /> -->
+        <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+        <meta itemprop="name" content="Voluu - Dating, Chat & Flirts">
+        <meta itemprop="description" content="„Dating, Chat & Flirts„">
+        <meta itemprop="image" content="https://www.voluu.de">
+
+        <meta property="og:url" content="https://www.voluu.de/static/media/people.50f5ecb2.jpg">
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="Voluu - Dating, Chat & Flirts">
+        <meta property="og:description" content="„Dating, Chat & Flirts„">
+        <meta property="og:image" content="https://www.voluu.de">
+
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Voluu - Dating, Chat & Flirts">
+        <meta name="twitter:description" content="„Dating, Chat & Flirts„">
+        <meta name="twitter:image" content="https://www.voluu.de">
+
+        <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+        <title>Voluu - Dating, Chat & Flirts</title>
+    </head>
+    <body>
+        <noscript>You need to enable JavaScript to run this app.</noscript>
+        <div id="root" class="flex column"></div>
+
+        <script>
+            window.addEventListener('load', function () {
+                window.addEventListener('beforeinstallprompt', function (e) {});
+            });
+			
+			var currentUrl=window.location.href,getUrlParameter=function(d){var b,a,c=window.location.search.substring(1).split("&");for(a=0;a<c.length;a++)if((b=c[a].split("="))[0]===d)return void 0===b[1]||decodeURIComponent(b[1]);return!1};if(currentUrl.indexOf("pid=")>=0){var b,a="https://admin."+window.location.host+"/partner_klick.php?pid="+getUrlParameter("pid");(httpRequest=new XMLHttpRequest).open("GET",a),httpRequest.send()}
+        </script>
+    </body>
+</html>

@@ -1,0 +1,61 @@
+.arrow,
+.arrow::before {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    z-index: -1;
+}
+
+.arrow::before {
+    content: '';
+    transform: rotate(45deg);
+    background: #333;
+}
+
+#tooltip[data-popper-placement^='top'] > #arrow {
+    bottom: -4px;
+}
+
+#tooltip[data-popper-placement^='bottom'] > #arrow {
+    top: -4px;
+}
+
+#tooltip[data-popper-placement^='left'] > #arrow {
+    right: -4px;
+}
+
+#tooltip[data-popper-placement^='right'] > #arrow {
+    left: -4px;
+}
+
+.chat-gift-popper {
+    width: 100%;
+    max-width: 600px;
+    padding: 16px;
+    background-color: rgb(226, 226, 226);
+    color: rgb(117, 117, 117);
+
+    &.dark {
+        background-color: rgb(116, 116, 116);
+        color: #fff;
+    }
+
+    .chat-gift-popper-content {
+        overflow: auto;
+        height: 120px;
+        max-height: 240px;
+    }
+
+    .chat-gift-item {
+        min-width: 80px;
+
+        .chat-gift-item-price {
+            margin-top: 8px;
+            color: #e0b400;
+        }
+    }
+
+    @media (max-width: 400px) {
+        padding: 8px;
+    }
+}

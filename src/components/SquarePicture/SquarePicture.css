@@ -1,0 +1,9 @@
+.square-picture {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  cursor: pointer;
+}/*# sourceMappingURL=SquarePicture.css.map */

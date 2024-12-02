@@ -1,0 +1,56 @@
+// FUNCTIONS ##################################################################
+@function spacing($multiplier: 1) {
+    @return #{$spacingBase * $multiplier}px;
+}
+
+@function cssVar($varName) {
+    @return var(--#{$varName});
+}
+
+// MIXINS #####################################################################
+
+// spacing ############################
+@mixin spacing($type: 'margin', $direction: 'all', $multiplier: 1) {
+    @if $direction == 'all' {
+        #{$type}: spacing($multiplier);
+    } @else {
+        #{#{$type}-#{$direction}}: spacing($multiplier);
+    }
+}
+
+// flex ###############################
+@mixin flex($flexdirection: null) {
+    display: flex;
+    flex: 1 1 auto;
+
+    @if $flexdirection {
+        flex-direction: $flexdirection;
+    }
+}
+
+@mixin flexContainer($flexdirection: null) {
+    display: flex;
+    flex: 1 1 auto;
+
+    @if $flexdirection {
+        flex-direction: $flexdirection;
+    }
+}
+
+@mixin flexItem($flexOption) {
+    display: flex;
+    flex: $flexOption;
+}
+
+// helper #############################
+
+@mixin hideTextOverflow {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+@mixin resetCss {
+    margin: 0;
+    padding: 0;
+}

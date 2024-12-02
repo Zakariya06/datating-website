@@ -1,0 +1,18 @@
+.drop-zone {
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 280px;
+  height: 280px;
+  cursor: pointer;
+  border: 1px solid #979797;
+  color: #000000;
+  background-color: #d8d8d8;
+}
+.drop-zone.dark {
+  border: 1px solid #979797;
+  color: #fff;
+  background-color: rgba(237, 239, 255, 0.3137254902);
+}/*# sourceMappingURL=DropZone.css.map */

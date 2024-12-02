@@ -1,0 +1,36 @@
+// ###### BASE VARIABLES ######################################################
+$spacingBase: 8;
+$spacingUnit: #{$spacingBase}px;
+$fontFamilies: 'Nunito', -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+    'Helvetica Neue', sans-serif;
+$transitionDuration: 250ms ease-in;
+$maxWidth: 1024px;
+
+// ###### COLOR VARIABLES #####################################################
+$colorPrimary: #222 !default;
+$colorSuccess: #2dad2d !default;
+$colorInfo: #5bc0de !default;
+$colorWarning: #ffa600 !default;
+$colorDanger: #ff0400 !default;
+$colorError: #a94442 !default;
+
+$colorWhite: #fff !default;
+$colorBlack: #222 !default;
+$colorLightGrey: #ddd !default;
+$colorDarkLightGrey: #777 !default;
+$colorLightDarkGrey: #555 !default;
+$colorDarkGrey: #333 !default;
+$colorSlateGrey: slategrey !default;
+
+$breakpointSM: 400px;
+$breakpointMD: 600px;
+
+$colorPrimary: #41a7f4;
+$colorPrimaryLight: #26c6da;
+$colorPrimaryDark: #42a5f5;
+$colorPrimaryText: #fff;
+
+$colorSecondary: #8bc823;
+$colorSecondaryLight: #8bc823;
+$colorSecondaryDark: #8bc823;
+$colorSecondaryText: #fff;

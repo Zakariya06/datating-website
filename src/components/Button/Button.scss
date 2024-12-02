@@ -1,0 +1,90 @@
+@import '../../assets/scss/Variables';
+@import 'config';
+
+.buttonBase {
+    border-radius: 1000px;
+    padding: 8px;
+    padding-left: 12px;
+    padding-right: 12px;
+    text-align: center;
+    justify-content: center;
+    outline: 0;
+    color: $colorPrimaryText;
+    display: flex;
+    align-items: center;
+    min-width: 200px;
+
+    &.mediumFont {
+        font-size: 18px;
+    }
+}
+
+.buttonVariant-outlined {
+    background: none;
+
+    &.primary {
+        border: 2px solid $colorPrimary;
+        color: $colorPrimary;
+    }
+
+    &.secondary {
+        border: 2px solid $colorSecondary;
+        color: $colorSecondary;
+    }
+}
+
+.buttonVariant-contained {
+    background-color: $colorPrimary;
+    color: $colorPrimaryText;
+    border: none;
+
+    &.primary {
+        background-color: $colorPrimary;
+        color: $colorPrimaryText;
+    }
+
+    &.secondary {
+        background-color: $colorSecondary;
+        color: $colorSecondaryText;
+    }
+
+    &.customFB {
+        background-color: rgb(24, 119, 242);
+        color: rgb(255, 255, 255);
+    }
+
+    &.customGradient {
+        background: linear-gradient(90deg, $primaryColor 0%, #ab5d9a 100%);
+        color: rgb(255, 255, 255);
+    }
+}
+
+.buttonVariant-text {
+    border: 0;
+    background: none;
+    color: $colorPrimary;
+
+    &.primary {
+        color: $colorPrimary;
+    }
+
+    &.secondary {
+        color: $colorSecondary;
+    }
+}
+
+.buttonBase:hover {
+    cursor: pointer;
+}
+
+.buttonBase:active {
+    opacity: 0.8;
+}
+
+.fullWidth {
+    width: 100%;
+}
+
+.buttonIcon {
+    margin-right: 7px;
+}

@@ -1,0 +1,61 @@
+.chat-interface {
+    .chat-name {
+        cursor: pointer;
+    }
+
+    .chat-message {
+        max-width: 80%;
+        margin-bottom: 16px;
+        text-align: left;
+        padding: 8px 16px;
+
+        &.sender {
+            align-self: flex-end;
+            color: #fff;
+            background-color: #42a5f5;
+            border-radius: 10px 0 10px 10px;
+        }
+
+        &.stranger {
+            align-self: flex-start;
+            border-radius: 0 10px 10px;
+            background-color: #edefff;
+            color: #000000;
+
+            &.dark {
+                color: #fff;
+                background-color: #747474;
+            }
+        }
+
+        &.gift {
+            //a
+        }
+
+        .chat-message-text {
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .chat-message-date {
+            font-size: 0.7rem;
+        }
+    }
+}
+
+.sternenkonto {
+    background-color: #068489;
+    color: white;
+    font-weight: 400;
+    max-height: 42px;
+    padding: 8px 8px;
+
+    &.padding {
+        padding: 8px 32px;
+    }
+
+    &.pointer {
+        cursor: pointer;
+        border-radius: 50px;
+    }
+}

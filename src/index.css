@@ -1,0 +1,274 @@
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap");
+/* @font-face {
+    font-family: Nunito;
+    src: url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+}
+
+@font-face {
+    font-family: Dancing Script;
+    src: url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
+} */
+html {
+  height: 100vh;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 100%;
+  /* background-color: rgb(239, 239, 239); */
+  /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif; */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+.dancing-script {
+  font-family: "Dancing Script" !important;
+}
+
+.nunito {
+  font-family: "Nunito";
+}
+
+.container {
+  margin: 0 auto;
+  padding-left: 24px;
+  padding-right: 24px;
+  max-width: 1300px;
+}
+
+#root {
+  flex: 1 1 100%;
+}
+
+#root:empty {
+  width: 300px;
+  height: 100px;
+  margin: auto;
+}
+
+/*#root:empty::before {
+    width: 300px;
+    height: 100px;
+    margin: auto;
+    content: url('./assets/images/logos/logo-with-writing.svg');
+    animation: rotation 750ms alternate 0s, fadeIn 250ms ease-in 720ms;
+}*/
+@media not all and (-webkit-min-device-pixel-ratio: 0), not all and (min-resolution: 0.001dpcm) {
+  input[type=password] {
+    font: small-caption;
+    font-size: 1rem;
+  }
+  /*#root:empty::before {
+      width: 100px;
+      height: 100px;
+      content: url('./assets/images/logos/logoonly.svg');
+      animation: rotationSafari 750ms alternate 0s;
+  }*/
+}
+#root:not(:empty) {
+  animation: fadeIn2 200ms ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0.6;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeIn2 {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes rotation {
+  0% {
+    width: 78px;
+    content: url("./assets/images/logos/logoonly.svg");
+    transform: scale(0.5);
+  }
+  25% {
+    width: 78px;
+    content: url("./assets/images/logos/logoonly.svg");
+    transform: scale(0.3);
+  }
+  75% {
+    width: 78px;
+    content: url("./assets/images/logos/logoonly.svg");
+    transform: scale(1.2);
+  }
+  90% {
+    width: 78px;
+    content: url("./assets/images/logos/logoonly.svg");
+    transform: scale(1);
+  }
+  100% {
+    width: 78px;
+    content: url("./assets/images/logos/logoonly.svg");
+    transform: scale(1) translateX(-110px);
+  }
+}
+@keyframes rotationSafari {
+  0% {
+    transform: scale(0.5);
+  }
+  25% {
+    transform: scale(0.3);
+  }
+  75% {
+    transform: scale(1.2);
+  }
+  90% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@media (min-width: 480px) {
+  .ppBtn {
+    width: 1000px;
+    margin-left: 10%;
+  }
+}
+iframe {
+  display: none !important;
+}
+
+.MuiListItem-button {
+  border-radius: 1rem !important;
+}
+
+.MuiDialog-paper {
+  border-radius: 30px;
+}
+
+.card-action-button {
+  z-index: 1 !important;
+}
+
+.spacing.double.margin.bottom {
+  margin-top: 0 !important;
+}
+
+.topMenu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.menuParent {
+  display: flex;
+  justify-content: center;
+}
+
+.menuContainer {
+  padding: 0 1.5em !important;
+  border-top-left-radius: 20px !important;
+}
+
+.menuContainer .topMenu .MuiListItem-root {
+  margin: 0 0.4em;
+}
+
+.spacing.triple.padding.all {
+  margin-top: 6px;
+  padding: 1rem !important;
+  width: 100% !important;
+}
+
+.flex.row {
+  -moz-column-gap: 1rem !important;
+       column-gap: 1rem !important;
+}
+
+p.MuiTypography-root.fullWidth.align-self-end.MuiTypography-body1 {
+  font-size: 0.7rem !important;
+}
+
+.messageSection {
+  min-height: 75vh;
+}
+
+.profileVis,
+.profileSec {
+  min-height: 70vh !important;
+}
+
+aside.flex.no-grow div:first-child {
+  position: static !important;
+}
+
+@media (max-width: 900px) {
+  .topMenu a:nth-child(1) {
+    display: none !important;
+  }
+  .topMenu a:nth-child(2) {
+    display: none !important;
+  }
+  .topMenu a:nth-child(3) {
+    display: none !important;
+  }
+  .topMenu a:nth-child(4) {
+    display: none !important;
+  }
+  .topMenu a:nth-child(5) {
+    display: none !important;
+  }
+  .menuContainer {
+    position: fixed;
+    right: 16px;
+    top: 150px;
+  }
+  .topMenu {
+    display: none !important;
+  }
+  .messageSection {
+    min-height: 75vh;
+  }
+  .profileVis,
+  .profileSec {
+    min-height: 70vh !important;
+  }
+  .contentsContainer {
+    padding-top: 3em !important;
+  }
+  .gameChangeDiv {
+    height: 900px !important;
+    overflow: hidden !important;
+  }
+  .MuiBottomNavigationAction-root.Mui-selected {
+    color: #FF8B50;
+    border-radius: 50px !important;
+    background-color: #dbdbdb;
+    height: 50px !important;
+    padding-top: 6px;
+  }
+}
+/*.feedItem {
+    background-color: #e1e9decc;
+    border-radius: 10px;
+    margin: 10px;
+}*//*# sourceMappingURL=index.css.map */

@@ -1,0 +1,44 @@
+@import '../../../../assets//scss/Mixins';
+@import '../../../../assets//scss/Variables';
+
+.card-action-button {
+    &.fab {
+        padding-left: spacing(3);
+        padding-right: spacing(3);
+        background-color: transparent;
+        font-size: 1rem;
+        margin-right: spacing(1);
+
+        @media (max-width: 500px) {
+            padding-left: spacing(2.5);
+            padding-right: spacing(1.5);
+        }
+
+        @media (max-width: 350px) {
+            padding-left: spacing(2.5);
+            padding-right: spacing(1.5);
+            min-width: 160px;
+        }
+    }
+
+    &.icon {
+        margin-left: 4px;
+        margin-right: 4px;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.16);
+        background-color: white;
+    }
+
+    &.message-button {
+        /*background-image: linear-gradient(180deg, #3a6aff 0%, #ab5d9a 100%);*/
+        color: #000;
+    }
+
+    // &.wink-button {
+    // }
+
+    // &.like-button {
+    // }
+
+    // &.match-button {
+    // }
+}

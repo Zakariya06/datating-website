@@ -1,0 +1,322 @@
+html {
+  font-family: "Nunito", -apple-system, "BlinkMacSystemFont", "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  transition-delay: 99999s;
+}
+
+/**
+ * 1. Remove the bottom border in Chrome 57-
+ * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
+ */
+abbr[title] {
+  border-bottom: none; /* 1 */
+  text-decoration: underline; /* 2 */
+  -webkit-text-decoration: underline dotted;
+          text-decoration: underline dotted; /* 2 */
+}
+
+/**
+ * Add the correct font weight in Chrome, Edge, and Safari.
+ */
+b,
+strong {
+  font-weight: bolder;
+}
+
+button {
+  font: inherit;
+}
+
+body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  width: 100%;
+  max-width: 100vw;
+  height: auto;
+  min-height: 100vh;
+  flex: 1 1 100%;
+  -webkit-text-size-adjust: 100%;
+     -moz-text-size-adjust: 100%;
+          text-size-adjust: 100%;
+  font-size: 100%;
+}
+
+main {
+  width: 100%;
+  overflow: auto;
+}
+
+.hidden {
+  display: none;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.full-height {
+  height: 100%;
+}
+
+.half-width {
+  width: 50%;
+}
+
+.ellipsis {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+.text-align-center {
+  text-align: center;
+}
+
+.text-align-left {
+  text-align: left;
+}
+
+.text-align-right {
+  text-align: right;
+}
+
+.flex {
+  display: flex;
+  flex: 1 1 100%;
+}
+.flex.row {
+  flex-direction: row;
+}
+.flex.column {
+  flex-direction: column;
+}
+.flex.no-direction {
+  flex-direction: unset;
+}
+.flex.no-grow {
+  flex: 0 1 auto;
+}
+.flex.no-shrink {
+  flex: 1 0 auto;
+}
+.flex.no-flex {
+  flex: unset;
+}
+.flex.wrap {
+  flex-wrap: wrap;
+}
+.flex.centered {
+  align-items: center;
+  justify-content: center;
+}
+.flex.vertical-centered {
+  align-items: center;
+}
+.flex.vertical-start {
+  align-items: flex-start;
+}
+.flex.vertical-end {
+  align-items: flex-end;
+}
+.flex.horizontal-centered {
+  justify-content: center;
+}
+.flex.horizontal-end {
+  justify-content: flex-end;
+}
+.flex.horizontal-start {
+  justify-content: flex-end;
+}
+.flex.justify-content-start {
+  justify-content: flex-start;
+}
+.flex.justify-content-end {
+  justify-content: flex-end;
+}
+.flex.justify-content-center {
+  justify-content: center;
+}
+.flex.justify-content-space-between {
+  justify-content: space-between;
+}
+.flex.justify-content-space-around {
+  justify-content: space-around;
+}
+.flex.justify-content-space-evenly {
+  justify-content: space-evenly;
+}
+.flex.align-items-start {
+  align-items: flex-start;
+}
+.flex.align-items-end {
+  align-items: flex-end;
+}
+.flex.align-items-center {
+  align-items: center;
+}
+.flex.align-items-stretch {
+  align-items: stretch;
+}
+.flex.align-items-baseline {
+  align-items: baseline;
+}
+.flex.align-content-start {
+  align-content: flex-start;
+}
+.flex.align-content-end {
+  align-content: flex-end;
+}
+.flex.align-content-center {
+  align-content: center;
+}
+.flex.align-content-stretch {
+  align-content: stretch;
+}
+.flex.align-content-space-between {
+  align-content: space-between;
+}
+.flex.align-content-space-around {
+  align-content: space-around;
+}
+.flex.align-self-start {
+  align-self: flex-start;
+}
+.flex.align-self-end {
+  align-self: flex-end;
+}
+.flex.align-self-center {
+  align-self: center;
+}
+.flex.align-self-baseline {
+  align-self: baseline;
+}
+.flex.align-self-stretch {
+  align-self: stretch;
+}
+
+.spacing.margin.right {
+  margin-right: 8px;
+}
+.spacing.margin.left {
+  margin-left: 8px;
+}
+.spacing.margin.top {
+  margin-top: 8px;
+}
+.spacing.margin.bottom {
+  margin-bottom: 8px;
+}
+.spacing.margin.all {
+  margin: 8px;
+}
+.spacing.padding.right {
+  padding-right: 8px;
+}
+.spacing.padding.left {
+  padding-left: 8px;
+}
+.spacing.padding.top {
+  padding-top: 8px;
+}
+.spacing.padding.bottom {
+  padding-bottom: 8px;
+}
+.spacing.padding.all {
+  padding: 8px;
+}
+.spacing.double.margin.right {
+  margin-right: 16px;
+}
+.spacing.double.margin.left {
+  margin-left: 16px;
+}
+.spacing.double.margin.top {
+  margin-top: 16px;
+}
+.spacing.double.margin.bottom {
+  margin-bottom: 16px;
+}
+.spacing.double.margin.all {
+  margin: 16px;
+}
+.spacing.double.padding.right {
+  padding-right: 16px;
+}
+.spacing.double.padding.left {
+  padding-left: 16px;
+}
+.spacing.double.padding.top {
+  padding-top: 16px;
+}
+.spacing.double.padding.bottom {
+  padding-bottom: 16px;
+}
+.spacing.double.padding.all {
+  padding: 16px;
+}
+.spacing.triple.margin.right {
+  margin-right: 24px;
+}
+.spacing.triple.margin.left {
+  margin-left: 24px;
+}
+.spacing.triple.margin.top {
+  margin-top: 24px;
+}
+.spacing.triple.margin.bottom {
+  margin-bottom: 24px;
+}
+.spacing.triple.margin.all {
+  margin: 24px;
+}
+.spacing.triple.padding.right {
+  padding-right: 24px;
+}
+.spacing.triple.padding.left {
+  padding-left: 24px;
+}
+.spacing.triple.padding.top {
+  padding-top: 24px;
+}
+.spacing.triple.padding.bottom {
+  padding-bottom: 24px;
+}
+.spacing.triple.padding.all {
+  padding: 24px;
+}
+
+.user-select-none {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}/*# sourceMappingURL=common.css.map */

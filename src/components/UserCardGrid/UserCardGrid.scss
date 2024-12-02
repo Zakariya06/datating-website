@@ -1,0 +1,35 @@
+.user-card-grid-root {
+    display: flex;
+    flex-wrap: wrap;
+
+    .user-card-grid-item {
+        margin: 8px;
+        max-width: calc(33% - 16px);
+        flex: 1 1 calc(33% - 16px);
+
+        @media (max-width: 1200px) {
+            max-width: calc(50% - 16px);
+            flex: 1 1 calc(50% - 16px);
+        }
+
+        @media (max-width: 999px) {
+            max-width: calc(100% - 16px);
+            flex: 1 1 calc(100% - 16px);
+        }
+
+        @media (max-width: 899px) {
+            max-width: calc(33% - 16px);
+            flex: 1 1 calc(33% - 16px);
+        }
+
+        @media (max-width: 599px) {
+            max-width: calc(50% - 16px);
+            flex: 1 1 calc(50% - 16px);
+        }
+
+        @media (max-width: 399px) {
+            max-width: calc(100% - 16px);
+            flex: 1 1 calc(100% - 16px);
+        }
+    }
+}

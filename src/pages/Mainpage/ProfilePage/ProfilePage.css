@@ -1,0 +1,10 @@
+.image-gallery .square-picture {
+  width: calc(33.33% - 16px);
+  -webkit-aspect-ratio: 1/1;
+  aspect-ratio: 1/1;
+}
+@media (max-width: 1286px) {
+  .image-gallery .square-picture {
+    width: calc(50% - 16px);
+  }
+}/*# sourceMappingURL=ProfilePage.css.map */

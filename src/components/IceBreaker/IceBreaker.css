@@ -1,0 +1,8 @@
+.ice-breaker-text {
+  background-color: #eee;
+  border-radius: 10px;
+  text-align: left;
+}
+.ice-breaker-text.dark {
+  background-color: #747474;
+}/*# sourceMappingURL=IceBreaker.css.map */
