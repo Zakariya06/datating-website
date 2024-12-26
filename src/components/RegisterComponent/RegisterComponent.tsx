@@ -96,6 +96,7 @@ export const RegisterComponent = memo((props: any) => {
                 preferredGender: searchGender,
             };
 
+            console.log('payload', register);
             setLoading(true);
             const result = await dispatch(AuthenticationActionCreator.registerUser(register));
             // console.log('result',result);
@@ -178,7 +179,6 @@ export const RegisterComponent = memo((props: any) => {
             }
         }
         history.push(profileId);
-
     };
 
     const handleNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -373,3 +373,4 @@ export default RegisterComponent;
 const inputStyle = {
     borderRadius: '30px',
 };
+

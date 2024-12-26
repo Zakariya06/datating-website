@@ -17,7 +17,8 @@ import {
     PAYMENT_SUCCEEDED_PATH,
     REGISTER_PATH,
     SUPPORT_PATH,
-    PROFILE_PATH_ID
+    PROFILE_PATH_ID,
+    REGISTER_USER,
 } from './models/Paths';
 import { Landingpage } from './pages/Landingpage/Landingpage';
 import SupportPage from './pages/Landingpage/SupportPage';
@@ -30,6 +31,8 @@ import FetchApi from './core/fetch/FetchApi';
 import { HttpMethods } from './core/fetch/HttpMethod';
 import generateValidUrl from './core/fetch/generateValidUrl';
 import StrangerProfilePage from 'pages/Mainpage/StrangerProfilePage';
+import RegisterModel from 'components/NewRegister/register';
+import Register from 'components/NewRegister/register';
 
 // import AgbPage from './pages/Landingpage/AgbPage';
 // import DataProtectionPolicyPage from './pages/Landingpage/DataProtectionPolicyPage';
@@ -59,7 +62,7 @@ export function Main() {
         }
     }
 
-    if(!isLoggedIn) {
+    if (!isLoggedIn) {
         enum AuthenticationActions {
             LOGIN_USER = 'LOGIN_USER',
             LOGIN_USER_REQUEST = 'LOGIN_USER_REQUEST',
@@ -72,22 +75,17 @@ export function Main() {
         const urlParams = new URLSearchParams(window.location.search);
         const token = urlParams.get('auth');
 
-        if(token) {        
+        if (token) {
             const asyncAction = ActionCreator.createAsyncAction(
                 AuthenticationActions.LOGIN_USER,
                 [AuthenticationActions.LOGIN_USER_REQUEST, AuthenticationActions.LOGIN_USER_RESPONSE, AuthenticationActions.LOGIN_USER_FAILURE],
-                () =>
-                    FetchApi.fetch(
-                        href,
-                        formatRequestBody(Config.LOGIN_USER_URL, undefined, { token: token}),
-                        HttpMethods.POST
-                    )
+                () => FetchApi.fetch(href, formatRequestBody(Config.LOGIN_USER_URL, undefined, { token: token }), HttpMethods.POST)
             );
 
             dispatch(asyncAction);
             history.replace(token);
         }
-     }
+    }
 
     return (
         <Suspense fallback={<LoadingOverlay />}>
@@ -101,8 +99,14 @@ export function Main() {
                     <Route path={HOME_PATH} component={MainPage} />
                 ) : (
                     <>
-                    <Route key="landingPage" path={[MAIN_PATH, LOGIN_PATH, REGISTER_PATH, FORGOT_PASSWORD_PATH,FORGOT_PASSWORD_PATHH]} component={Landingpage} exact />
-                    <Route key="strangerProfilePage" path={PROFILE_PATH_ID} component={StrangerProfilePage} exact />
+                        <Route
+                            key="landingPage"
+                            path={[MAIN_PATH, LOGIN_PATH, REGISTER_PATH, FORGOT_PASSWORD_PATH, FORGOT_PASSWORD_PATHH]}
+                            component={Landingpage}
+                            exact
+                        />
+                        <Route key="strangerProfilePage" path={PROFILE_PATH_ID} component={StrangerProfilePage} exact />
+                        <Route key="strangerProfilePage" path={REGISTER_USER} component={Register} exact />
                     </>
                 )}
 
@@ -113,3 +117,4 @@ export function Main() {
 }
 
 export default Main;
+

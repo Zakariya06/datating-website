@@ -61,7 +61,8 @@ export class BerndMapper {
             facebook_id: '',
             apple_id: '',
             google_id: '',
-            ip: IPService.currentIP,
+            ip:''
+            // ip: IPService.currentIP,
         };
     }
 
@@ -102,7 +103,8 @@ export class BerndMapper {
             facebook_id: '',
             apple_id: '',
             google_id: '',
-            ip: IPService.currentIP,
+            // ip: IPService.currentIP,
+            ip:'',
             username: name,
             kennwort: password,
             email: email,

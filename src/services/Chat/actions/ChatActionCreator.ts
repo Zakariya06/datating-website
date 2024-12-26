@@ -385,6 +385,7 @@ export class ChatActionCreator {
         );
     }
     public static buyPremium(month: number) {
+        //@ts-ignore
         const url = generateValidUrl(config.BUY_PREMIUM);
 
         return ActionCreator.createAsyncAction(
@@ -392,6 +393,7 @@ export class ChatActionCreator {
             [ChatActions.PREMIUM_DIALOG_REQUEST, ChatActions.PREMIUM_DIALOG_RESPONSE, ChatActions.PREMIUM_DIALOG_FAILURE],
             (state: IState) => {
                 const { user, token } = getUserAndToken(state);
+                //@ts-ignore
                 return FetchApi.fetch(url, formatRequestBody(Config.BUY_PREMIUM, user?.Userid, { month: month }), HttpMethods.POST, token, user);
             },
             undefined,
@@ -507,3 +509,4 @@ export class ChatActionCreator {
 }
 
 export default ChatActionCreator;
+

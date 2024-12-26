@@ -14,7 +14,8 @@ export const VISITORS_PATH = '/visitors';
 export const PROFILE_PATH = '/profile';
 
 export const STRANGER_PROFILE_PATH = '/stranger-profile/:id?';
-export const PROFILE_PATH_ID= '/profile/:strangerId?';
+export const PROFILE_PATH_ID = '/profile/:strangerId?';
+export const REGISTER_USER = '/register-user';
 
 export const SHOP_PATH = '/shop';
 export const APP_SHOP_PATH = '/appshop';
@@ -39,3 +40,4 @@ export const REGISTER_PATH = '/register';
 export const PAYMENT_SUCCEEDED_PATH = '/payment-succeeded';
 
 export const NEWS_PATH = '/news';
+

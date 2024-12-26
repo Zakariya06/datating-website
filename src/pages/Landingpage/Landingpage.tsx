@@ -26,6 +26,7 @@ import RegisterComponent from 'components/RegisterComponent';
 import { RegisterationStepper } from 'components/RegisterationStepper/RegisterationStepper';
 import { Box } from '@mui/material';
 import Config from 'config';
+import Form from 'components/NewRegister';
 
 export interface ILandingpageProps {}
 
@@ -68,7 +69,7 @@ export const Landingpage = React.memo((props: ILandingpageProps) => {
                         alignItems: 'center',
                         justifyContent: 'center',
                         width: '100%',
-                        position:'relative'
+                        position: 'relative',
                     }}
                 >
                     <Box
@@ -76,12 +77,12 @@ export const Landingpage = React.memo((props: ILandingpageProps) => {
                         height={250}
                         sx={{
                             background: `linear-gradient(to left, ${Config.GLOBAL_PRIMARY_COLOR}, #b73309)`,
-                            position:'absolute',
-                            left:-100,
-                            top:50,
-                            borderTopRightRadius:'190px',
-                            borderBottomRightRadius:'130px',
-                            opacity:.7
+                            position: 'absolute',
+                            left: -100,
+                            top: 50,
+                            borderTopRightRadius: '190px',
+                            borderBottomRightRadius: '130px',
+                            opacity: 0.7,
                         }}
                     ></Box>
                     <Grid className="hero-section" container style={{ maxWidth: '1150px', display: 'flex', justifyContent: 'center' }}>
@@ -108,7 +109,8 @@ export const Landingpage = React.memo((props: ILandingpageProps) => {
                                     Registriere dich jetzt kostenlos und lerne neue Leute kennen.
                                 </Typography>
 
-                                <RegisterationStepper />
+                                {/* <RegisterationStepper /> */}
+                                <Form />
 
                                 <div
                                     style={{
@@ -118,8 +120,7 @@ export const Landingpage = React.memo((props: ILandingpageProps) => {
                                         flexWrap: 'wrap',
                                         width: '100%',
                                     }}
-                                >
-                                </div>
+                                ></div>
                             </div>
                         </Grid>
 
@@ -127,10 +128,23 @@ export const Landingpage = React.memo((props: ILandingpageProps) => {
                             {/* <div style={{width: '100%', textAlign: 'center', padding: '20px'  }}> */}
                             <Box mt={{ md: '13em', sm: '2em', xs: '1em' }}>
                                 <img src={topMockupImg} alt="hero" style={{ width: '100%', aspectRatio: '.85/1', objectFit: 'contain' }} />
-                                {Config.GLOBAL_SITE_DOMAIN === "voluu.de" && (
-                                    <a target="_blank" href="https://apps.apple.com/de/app/voluu/id6478861475" style={{ display: 'flex', justifyContent: 'center' }}>
-                                        <img src={appleStore} alt="applestore" style={{ height: 50 }} />
-                                    </a>
+                                {Config.GLOBAL_SITE_DOMAIN === 'voluu.de' && (
+                                    <>
+                                        <a
+                                            target="_blank"
+                                            href="https://play.google.com/store/apps/details?id=com.voluu.voluuapp"
+                                            style={{ display: 'flex', justifyContent: 'center' }}
+                                        >
+                                            <img src={playStore} alt="playStore" style={{ height: 50 }} />
+                                        </a>
+                                        <a
+                                            target="_blank"
+                                            href="https://apps.apple.com/de/app/voluu/id6478861475"
+                                            style={{ display: 'flex', justifyContent: 'center' }}
+                                        >
+                                            <img src={appleStore} alt="applestore" style={{ height: 50 }} />
+                                        </a>
+                                    </>
                                 )}
                             </Box>{' '}
                         </Grid>
@@ -172,14 +186,15 @@ export const Landingpage = React.memo((props: ILandingpageProps) => {
                                 fontFamily: '"Arial", sans-serif',
                             }}
                         >
-                            Sicher und Vertrauenswürdig: Bei {Config.GLOBAL_SITE_NAME} legen wir höchsten Wert auf deine Sicherheit und Privatsphäre. Du kannst dich
-                            darauf verlassen, dass deine persönlichen Informationen geschützt sind, während du dich auf die Suche nach Liebe begibst.
+                            Sicher und Vertrauenswürdig: Bei {Config.GLOBAL_SITE_NAME} legen wir höchsten Wert auf deine Sicherheit und Privatsphäre.
+                            Du kannst dich darauf verlassen, dass deine persönlichen Informationen geschützt sind, während du dich auf die Suche nach
+                            Liebe begibst.
                             <br />
                             Spaß und Einfachheit: Das Kennenlernen sollte Spaß machen. Unsere benutzerfreundliche App macht es dir leicht, neue
                             Menschen kennenzulernen, Nachrichten auszutauschen und vielleicht sogar das perfekte Date zu planen.
                             <br />
-                            Deine Reise beginnt hier: Melde dich noch heute bei {Config.GLOBAL_SITE_NAME} an und starte deine Reise zu bedeutsamen Verbindungen. Die Liebe
-                            kann überall sein, und wir sind hier, um sie dir näherzubringen.
+                            Deine Reise beginnt hier: Melde dich noch heute bei {Config.GLOBAL_SITE_NAME} an und starte deine Reise zu bedeutsamen
+                            Verbindungen. Die Liebe kann überall sein, und wir sind hier, um sie dir näherzubringen.
                         </Typography>
                     </Grid>
 
@@ -193,7 +208,6 @@ export const Landingpage = React.memo((props: ILandingpageProps) => {
                         />
                     </Grid>
                 </Grid>
-
 
                 <Grid container spacing={2} style={{ marginTop: 100 }}>
                     <Grid item sm={12} md={10} lg={5} style={{ display: 'flex', justifyContent: 'center' }} className={'meet-me-right'}>
@@ -240,14 +254,14 @@ export const Landingpage = React.memo((props: ILandingpageProps) => {
                                 fontFamily: '"Arial", sans-serif',
                             }}
                         >
-                            Bist du bereit für aufregende Begegnungen, tiefgehende Verbindungen und vielleicht sogar die Liebe deines Lebens? 
+                            Bist du bereit für aufregende Begegnungen, tiefgehende Verbindungen und vielleicht sogar die Liebe deines Lebens?
                             {Config.GLOBAL_SITE_NAME} ist deine Tür zu einer Welt voller Möglichkeiten.
                             <br />
                             Finde Deinen Match: Unsere intelligente Matching-Technologie bringt Menschen mit ähnlichen Interessen, Werten und
                             Lebenszielen zusammen. Lass uns dir dabei helfen, jemanden zu finden, der wirklich zu dir passt.
                         </Typography>
                     </Grid>
-                </Grid>                
+                </Grid>
 
                 <div style={{ marginTop: '5rem' }}>
                     <div
@@ -277,7 +291,12 @@ export const Landingpage = React.memo((props: ILandingpageProps) => {
                                 />
                             </Grid>
                             <Grid item sm={1}></Grid>
-                            <Grid item md={8} lg={6} style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center' }}>
+                            <Grid
+                                item
+                                md={8}
+                                lg={6}
+                                style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center' }}
+                            >
                                 <div style={{ width: '80%', paddingTop: '50px' }}>
                                     <Typography
                                         className="meet-hdd"
@@ -297,10 +316,15 @@ export const Landingpage = React.memo((props: ILandingpageProps) => {
                                         Lass uns dein perfektes Date bzw. deine neue Liebe finden❣️
                                     </Typography>
                                 </div>
-                                {Config.GLOBAL_SITE_DOMAIN === "voluu.de" && (
-                                    <a target="_blank" href="https://apps.apple.com/de/app/voluu/id6478861475">
-                                        <img src={appleStore} alt="applestore" style={{ height: 50, margin: '1rem 0' }} />
-                                    </a>
+                                {Config.GLOBAL_SITE_DOMAIN === 'voluu.de' && (
+                                    <>
+                                        <a target="_blank" href="https://play.google.com/store/apps/details?id=com.voluu.voluuapp">
+                                            <img src={playStore} alt="playStore" style={{ height: 50, margin: '1rem 0' }} />
+                                        </a>
+                                        <a target="_blank" href="https://apps.apple.com/de/app/voluu/id6478861475">
+                                            <img src={appleStore} alt="applestore" style={{ height: 50, margin: '1rem 0' }} />
+                                        </a>
+                                    </>
                                 )}
                             </Grid>
                         </Grid>
