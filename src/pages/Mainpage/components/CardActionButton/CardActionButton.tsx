@@ -2,7 +2,7 @@ import './CardActionButton.scss';
 
 import { faComment, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faHeartOutlined, faSmileWink } from '@fortawesome/pro-light-svg-icons';
-import { IconButton,Button, makeStyles } from '@material-ui/core';
+import { IconButton, Button, makeStyles } from '@material-ui/core';
 import React from 'react';
 
 import Icon from '../../../../components/Icon';
@@ -43,7 +43,7 @@ const useStyles = makeStyles(() => ({
 
 export interface ICardActionButtonProps {
     variant?: 'icon' | 'fab';
-    type: 'message' | 'wink' | 'like' | 'match';
+    type: 'message' | 'wink' | 'like' | 'match' | any;
     outlined?: boolean;
     onClick?(): void;
 }

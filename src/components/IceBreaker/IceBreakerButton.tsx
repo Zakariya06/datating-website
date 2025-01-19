@@ -7,7 +7,7 @@ import useTranslation from '../../services/i18n/core/useTranslation';
 import IceBreakerModal from './IceBreakerModal';
 import { useHistory } from 'react-router-dom';
 import { IUser } from '../../models/user/IUser';
-import { REGISTER_PATH } from 'models/Paths';
+import { REGISTER_USER } from 'models/Paths';
 
 
 const useStyles = makeStyles(() => ({
@@ -61,7 +61,7 @@ export const IceBreakerButton = (props: IIceBreakerButtonProps) => {
                 startIcon={<img src={IMG} alt="eisbrecher" width={24} height={24} />}
                 onClick={() => {
                     if(!user && !token){
-                        history.push(REGISTER_PATH);
+                        history.push(REGISTER_USER, { from: location.pathname });
                         return;
                     }
                 setisOpen(true);}}

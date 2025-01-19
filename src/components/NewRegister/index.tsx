@@ -161,7 +161,7 @@ const Form = () => {
                 onClick={() => {}}
             >
                 {LOGIN_APPLE}
-            </Button>*/}
+            </Button> */}
 
             {/* Register and Login Modals */}
             <LoginModal open={loginModalOpen} onClose={handleLoginClose} />

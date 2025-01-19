@@ -96,19 +96,36 @@ export function Main() {
                 <Route key={SUPPORT_PATH} path={SUPPORT_PATH} component={SupportPage} exact />
                 <Route key={PAYMENT_SUCCEEDED_PATH} path={PAYMENT_SUCCEEDED_PATH} component={PaymentSucceeded} exact />
                 {isLoggedIn ? (
+                    // Falls eingeloggt, rendere die Hauptseite
                     <Route path={HOME_PATH} component={MainPage} />
                 ) : (
-                    <>
+                    <Switch>
+                        {/* Landingpage-Routen */}
                         <Route
                             key="landingPage"
                             path={[MAIN_PATH, LOGIN_PATH, REGISTER_PATH, FORGOT_PASSWORD_PATH, FORGOT_PASSWORD_PATHH]}
                             component={Landingpage}
                             exact
                         />
-                        <Route key="strangerProfilePage" path={PROFILE_PATH_ID} component={StrangerProfilePage} exact />
-                        <Route key="strangerProfilePage" path={REGISTER_USER} component={Register} exact />
-                    </>
+                        {/* StrangerProfilePage */}
+                        <Route
+                            key="strangerProfilePage"
+                            path={PROFILE_PATH_ID}
+                            component={StrangerProfilePage}
+                            exact
+                        />
+                        {/* Register */}
+                        <Route
+                            key="registerPage"
+                            path={REGISTER_USER}
+                            component={Register}
+                            exact
+                        />
+                        {/* Fallback: Alle anderen nicht authentifizierten Routen leiten zu MAIN_PATH */}
+                        <Redirect path="*" to={MAIN_PATH} />
+                    </Switch>
                 )}
+
 
                 <Redirect path="*" to={isLoggedIn ? HOME_PATH : MAIN_PATH} />
             </Switch>

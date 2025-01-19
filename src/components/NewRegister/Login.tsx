@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import AuthenticationActionCreator from '../../actions/AuthenticationActionCreator';
 import isValidEmail from '../../core/typeguards/isValidEmail';
-import { FORGOT_PASSWORD_PATH } from '../../models/Paths';
+import { FORGOT_PASSWORD_PATH, REGISTER_USER } from '../../models/Paths';
 import { IRequestDataFailedAction } from '../../models/state';
 import { IUser } from '../../models/user/IUser';
 import { getAuthenticationError } from '../../selectors/AuthenticationSelectors';
@@ -123,9 +123,9 @@ const LoginModal = ({ open, onClose }: { open: boolean; onClose: () => void }) =
         history.push(FORGOT_PASSWORD_PATH);
     }, [history]);
 
-    // const handleOpenRegister = () => {
-    //     history.push(REGISTER_PATH);
-    // };
+    const handleOpenRegister = () => {
+        history.push(REGISTER_USER);
+    };
 
     const handleEnter = async (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (errorHelperText) {
@@ -245,9 +245,9 @@ const LoginModal = ({ open, onClose }: { open: boolean; onClose: () => void }) =
                 </div>
             )} */}
                     <Typography sx={{ mb: 1 }}>Noch nicht dabei ?</Typography>
-                    {/* <Button onClick={props.handleNextStep} variant="text" color="primary">
+                    <Button onClick={handleOpenRegister} variant="text" color="primary">
                         Jetzt registrieren!
-                    </Button> */}
+                    </Button>
                 </div>
             </Box>
         </Modal>

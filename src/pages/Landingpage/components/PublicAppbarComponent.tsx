@@ -5,7 +5,7 @@ import { Route, match, useHistory, useRouteMatch } from 'react-router-dom';
 import SkippedLogo from '../../../assets/images/logos/logo-with-writing-white.svg';
 import SkippedLogoAlt from '../../../assets/images/logos/logo-with-writing.svg';
 import SkippedLogoOnly from '../../../assets/images/logos/logoonly.svg';
-import { FORGOT_PASSWORD_PATH, HOME_PATH, LOGIN_PATH, MAIN_PATH, REGISTER_PATH, PROFILE_PATH_ID } from '../../../models/Paths';
+import { FORGOT_PASSWORD_PATH, HOME_PATH, LOGIN_PATH, MAIN_PATH, REGISTER_PATH, PROFILE_PATH_ID, REGISTER_USER } from '../../../models/Paths';
 import ThemeContext from '../../../theme/ThemeContext';
 // import RegisterComponent from 'components/RegisterComponent';
 import { RegisterationStepper } from 'components/RegisterationStepper/RegisterationStepper';
@@ -25,7 +25,7 @@ export const AppbarComponent = React.memo((props: IAppbarComponentProps) => {
     const [path, setPath] = useState(isLandingPage ? SkippedLogo : type === 'dark' ? SkippedLogo : SkippedLogoAlt);
     const isSmallScreen = useMediaQuery('(max-width:450px)', { defaultMatches: true });
     const isMobile = useMediaQuery('(max-width:600px)', { defaultMatches: true });
-    // const history = useHistory();
+    const history = useHistory();
 
     const handleOpenModal = () => {
         setOpenModal(true);
@@ -77,10 +77,10 @@ export const AppbarComponent = React.memo((props: IAppbarComponentProps) => {
                                 exact
                                 component={() => (
                                     <Button
-                                        // onClick={() => {
-                                        //     history.push(REGISTER_PATH);
-                                        // }}
-                                        onClick={handleOpenModal}
+                                        onClick={() => {
+                                            history.push(REGISTER_USER, { from: location.pathname });
+                                        }}
+                                        //onClick={handleOpenModal}
                                         component={Link}
                                         color="secondary"
                                         size={isDesktop ? 'large' : 'small'}

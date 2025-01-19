@@ -27,26 +27,23 @@ export const ChipsComponent = memo((props: IChipsComponentProps) => {
     } = props;
 
     return (
-        <Paper style={{
-            margin:'.5em 0'
-        }}>
-            <Chip
+        <Chip
             label={label}
             variant={variant}
             clickable={Boolean(onClick)}
             onClick={onClick}
-            icon={<Icon iconColor={color}  icon={icon}  />}
+            icon={<Icon iconColor={color} icon={icon} />}
             style={{
                 padding: 8,
                 margin: 4,
                 color: color,
                 backgroundColor: 'transparent',
-                borderRadius: 12,
-                width:'100%'
+                // borderRadius: 12,
+                width: '100%',
             }}
-        />  
-        </Paper>
+        />
     );
 });
 
 export default ChipsComponent;
+

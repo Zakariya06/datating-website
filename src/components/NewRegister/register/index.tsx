@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { Button, Grid, Dialog, DialogActions, DialogContent, DialogTitle, Box, LinearProgress, Typography } from '@mui/material';
 import { getUser } from 'selectors/AuthenticationSelectors';
 import { useDispatch, useSelector } from 'react-redux';
@@ -78,13 +78,17 @@ const Register: React.FC<any> = () => {
         setSearchGender(value);
     };
     const profileId = history.location.pathname.includes('profile') ? history.location.pathname.replace('profile', 'stranger-profile') : '/';
+
+    const location = useLocation<{ from?: string }>();
     useEffect(() => {
         if (!registerModalOpen) {
-            history.push('/');
+          // Hole den vorherigen Pfad aus location.state, falls vorhanden
+          const previousPath = location.state?.from || '/'; // Fallback auf '/' wenn nichts übergeben wurde
+          history.push(previousPath);
         }
-    }, [registerModalOpen]);
+      }, [registerModalOpen, history, location.state]);
 
-    const totalSteps = 7;
+    const totalSteps = 6;
     const progress = ((step - 1) / (totalSteps - 1)) * 100;
 
     const handleTermsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -127,7 +131,6 @@ const Register: React.FC<any> = () => {
                 return true;
         }
     };
-    console.log('isStepValid', isStepValid);
 
     const handleRegister = async () => {
         if (
@@ -161,8 +164,6 @@ const Register: React.FC<any> = () => {
 
             setLoading(true);
             const result = await dispatch(AuthenticationActionCreator.registerUser(register));
-            // console.log('result',result);
-            // history.push(`/stranger-profile/`)
             setLoading(false);
 
             try {

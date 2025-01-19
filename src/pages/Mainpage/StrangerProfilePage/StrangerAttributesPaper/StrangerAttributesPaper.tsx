@@ -27,9 +27,12 @@ export const StrangerAttributesPaper = memo((props: IStrangerAttributesPaperProp
     const { Gender, Bodyjewelry, Eyes, Hair, Living, Relationship, Size, Smoker, Starsign } = strangerUser;
     const { Profilid, Username, Birthday, City = '', IsLiked, AllreadyChattet } = strangerUser;
 
-
     return (
-        <Paper style={{ height: '100%', marginLeft: margin, backgroundColor: 'transparent', boxShadow: 'none' }} square className="flex column spacing double padding all">
+        <Paper
+            style={{ height: '100%', marginLeft: margin, backgroundColor: 'transparent', boxShadow: 'none' }}
+            square
+            className="flex column spacing double padding all"
+        >
             <div className="flex column">
                 <Typography variant="overline" className="ellipsis">
                     {Username}, {getAge(Birthday)}
@@ -52,17 +55,17 @@ export const StrangerAttributesPaper = memo((props: IStrangerAttributesPaperProp
             />
 
             <div className="flex column" />
-            {Profilid !== 'support' && (   
+            {Profilid !== 'support' && (
                 <div className="flex wrap align-items-center justify-content-space-around">
                     <div style={{ flex: '1 1 50%', maxWidth: 160 }} className="spacing margin top">
                         <LikeButton profilId={Profilid} strangerUser={strangerUser} token={token} user={user} variant="fab" isLiked={IsLiked} />
                     </div>
 
-                   {token && (
-                    <div style={{ flex: '1 1 50%', maxWidth: 160 }} className="spacing margin top">
-                        <ZwinkerButton profilId={Profilid} username={Username} token={token} user={user} variant="fab" />
-                    </div>
-                   )}
+                    {token && (
+                        <div style={{ flex: '1 1 50%', maxWidth: 160 }} className="spacing margin top">
+                            <ZwinkerButton profilId={Profilid} username={Username} token={token} user={user} variant="fab" />
+                        </div>
+                    )}
 
                     {!AllreadyChattet && (
                         <div style={{ flex: '1 1 50%', maxWidth: 160 }} className="spacing margin top">
@@ -98,3 +101,4 @@ export const StrangerAttributesPaper = memo((props: IStrangerAttributesPaperProp
 });
 
 export default StrangerAttributesPaper;
+

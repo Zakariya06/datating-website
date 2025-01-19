@@ -129,22 +129,13 @@ export const Landingpage = React.memo((props: ILandingpageProps) => {
                             <Box mt={{ md: '13em', sm: '2em', xs: '1em' }}>
                                 <img src={topMockupImg} alt="hero" style={{ width: '100%', aspectRatio: '.85/1', objectFit: 'contain' }} />
                                 {Config.GLOBAL_SITE_DOMAIN === 'voluu.de' && (
-                                    <>
-                                        <a
-                                            target="_blank"
-                                            href="https://play.google.com/store/apps/details?id=com.voluu.voluuapp"
-                                            style={{ display: 'flex', justifyContent: 'center' }}
-                                        >
-                                            <img src={playStore} alt="playStore" style={{ height: 50 }} />
-                                        </a>
-                                        <a
-                                            target="_blank"
-                                            href="https://apps.apple.com/de/app/voluu/id6478861475"
-                                            style={{ display: 'flex', justifyContent: 'center' }}
-                                        >
-                                            <img src={appleStore} alt="applestore" style={{ height: 50 }} />
-                                        </a>
-                                    </>
+                                    <a
+                                        target="_blank"
+                                        href="https://apps.apple.com/de/app/voluu/id6478861475"
+                                        style={{ display: 'flex', justifyContent: 'center' }}
+                                    >
+                                        <img src={appleStore} alt="applestore" style={{ height: 50 }} />
+                                    </a>
                                 )}
                             </Box>{' '}
                         </Grid>
@@ -317,14 +308,9 @@ export const Landingpage = React.memo((props: ILandingpageProps) => {
                                     </Typography>
                                 </div>
                                 {Config.GLOBAL_SITE_DOMAIN === 'voluu.de' && (
-                                    <>
-                                        <a target="_blank" href="https://play.google.com/store/apps/details?id=com.voluu.voluuapp">
-                                            <img src={playStore} alt="playStore" style={{ height: 50, margin: '1rem 0' }} />
-                                        </a>
-                                        <a target="_blank" href="https://apps.apple.com/de/app/voluu/id6478861475">
-                                            <img src={appleStore} alt="applestore" style={{ height: 50, margin: '1rem 0' }} />
-                                        </a>
-                                    </>
+                                    <a target="_blank" href="https://apps.apple.com/de/app/voluu/id6478861475">
+                                        <img src={appleStore} alt="applestore" style={{ height: 50, margin: '1rem 0' }} />
+                                    </a>
                                 )}
                             </Grid>
                         </Grid>

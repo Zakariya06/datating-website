@@ -1,5 +1,5 @@
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
-import { faGift, faFile } from '@fortawesome/pro-light-svg-icons';
+import { faGift, faCamera } from '@fortawesome/pro-light-svg-icons';
 import { IconButton, InputAdornment, TextField, Typography } from '@material-ui/core';
 import React, { memo, useCallback, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -129,7 +129,7 @@ export const ChatInput = memo((props: IChatInputProps) => {
 
                                 {partnerId !== 'support' && (
                                     <IconButton onClick={handleFileClick}>
-                                        <Icon icon={faFile} />
+                                        <Icon icon={faCamera} />
                                     </IconButton>
                                 )}
 

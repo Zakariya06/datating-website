@@ -16,7 +16,7 @@ import NotificationActionCreator from '../../services/Notifications/actions/Noti
 import MatchIcon from './MatchIcon';
 import Config from '../../config';
 import { useHistory } from 'react-router-dom';
-import { REGISTER_PATH } from 'models/Paths';
+import { REGISTER_USER } from 'models/Paths';
 
 export interface ILikeButtonProps {
     profilId: string;
@@ -47,8 +47,8 @@ export const LikeButton = memo((props: ILikeButtonProps) => {
 
     const handleLikeClick = useCallback(async () => {
         const res = await DirectInteractionActionCreator.triggerStrangerUserRelation(profilId, 'like', token, user);
-        if(!user && !token){
-            history.push(REGISTER_PATH);
+        if (!user && !token) {
+            history.push(REGISTER_USER, { from: location.pathname });
         }
 
         if (res.ok) {
@@ -123,3 +123,4 @@ export const LikeButton = memo((props: ILikeButtonProps) => {
 });
 
 export default LikeButton;
+
