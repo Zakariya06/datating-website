@@ -1,7 +1,7 @@
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { Badge, Box, Tab, Tabs } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
-import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { memo, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
 import Icon from '../../../../components/Icon';
 import { IDialog } from '../../../../models/chat/IDialog';
@@ -9,6 +9,7 @@ import useTranslation from '../../../../services/i18n/core/useTranslation';
 import ChatOverviewList from './ChatOverviewList';
 import { Restore } from '@mui/icons-material';
 import Config from 'config/config';
+import ThemeContext from 'theme/ThemeContext';
 
 export interface IChatOverviewProps {
     chats: IDialog[];
@@ -43,17 +44,21 @@ export const ChatOverview = memo((props: IChatOverviewProps) => {
             }),
         [chats]
     );
-
+    const { type } = useContext(ThemeContext);
     const filteredChats = useMemo(() => sortedChats.filter((x) => !x.isFavorite), [sortedChats]);
     const favoriteChats = useMemo(() => sortedChats.filter((x) => x.isFavorite), [sortedChats]);
     const unreadCount = useMemo(() => filteredChats.reduce<number>((prevVal, dialog) => (dialog.partner.unread ?? 0) + prevVal, 0), [filteredChats]);
-    const favoriteUnreadCount = useMemo(() => favoriteChats.reduce<number>((prevVal, dialog) => (dialog.partner.unread ?? 0) + prevVal, 0), [
-        favoriteChats,
-    ]);
+    const favoriteUnreadCount = useMemo(
+        () => favoriteChats.reduce<number>((prevVal, dialog) => (dialog.partner.unread ?? 0) + prevVal, 0),
+        [favoriteChats]
+    );
 
     return (
         <div className="flex column no-grow" style={{ minWidth: 315 }}>
-            <div className="flex no-grow align-items-center" style={{ paddingTop: 16, minHeight: 64 }}>
+            <div
+                className="flex no-grow align-items-center"
+                style={{ paddingTop: 16, minHeight: 64, background: type === 'light' ? 'white' : 'black' }}
+            >
                 <Tabs
                     scrollButtons="off"
                     indicatorColor="primary"
@@ -85,16 +90,19 @@ export const ChatOverview = memo((props: IChatOverviewProps) => {
                 </Tabs>
             </div>
 
-            <div className="flex column" style={{width:'100%',position:'relative',marginTop:4}}>
+            <div className="flex column" style={{ width: '100%', position: 'relative', marginTop: 4 }}>
                 <ChatOverviewList
                     chats={value === 0 ? filteredChats : favoriteChats}
                     selectedDialogId={selectedDialog?.uuid}
                     onChatClick={onChatClick}
                     offen={selectedDialog?.offen}
                 />
-                 
             </div>
-            <div style={{backgroundColor: Config.GLOBAL_PRIMARY_COLOR}} onClick={openPurchaseStarsDialog} className="flex justify-content-space-between align-items-center full-width sternenkonto pointer">
+            <div
+                style={{ backgroundColor: Config.GLOBAL_PRIMARY_COLOR }}
+                onClick={openPurchaseStarsDialog}
+                className="flex justify-content-space-between align-items-center full-width sternenkonto pointer"
+            >
                 <Typography variant="overline" color="inherit">
                     {FAVORITE_STARS}
                 </Typography>
@@ -109,3 +117,4 @@ export const ChatOverview = memo((props: IChatOverviewProps) => {
 });
 
 export default ChatOverview;
+

@@ -12,6 +12,8 @@ import EmptyState from '../EmptyState/EmptyState';
 import { useRouteMatch } from 'react-router-dom';
 import { EXPLORER_PATH } from 'models/Paths';
 import img from '../../assets/images/emptyStates/Notifications_Monochromatic.svg';
+import { Box } from 'lucide-react';
+import ProfileCardComponent_Grid from 'pages/Mainpage/components/ProfileCardComponent/ProfileCardComponent_Grid';
 
 export interface IUserCardGridProps {
     viewType: 'like' | 'explorer' | 'visitor';
@@ -27,6 +29,7 @@ export const UserCardGrid = memo((props: IUserCardGridProps) => {
     const [displayedUsersCount, setdisplayedUsersCount] = useState<number>(pageSize);
     const { NO_EVENTS } = useTranslation();
     const isExplorerPage = useRouteMatch(EXPLORER_PATH);
+
     const currentItemsCount = useRef(items.length);
 
     useEffect(() => {
@@ -82,12 +85,7 @@ export const UserCardGrid = memo((props: IUserCardGridProps) => {
     }, []);
 
     if (items.length === 0 && !isLoading) {
-        return <EmptyState
-        image={img}
-        title={NO_EVENTS}
-        imageStyles={{ maxWidth: '100%' }}
-        titleStyle={{ fontWeight: 300, fontSize: '1.1rem' }}
-    />;
+        return <EmptyState image={img} title={NO_EVENTS} imageStyles={{ maxWidth: '100%' }} titleStyle={{ fontWeight: 300, fontSize: '1.1rem' }} />;
     }
 
     if ((isLoading && items.length === 0) || !user || !token) {
@@ -102,27 +100,44 @@ export const UserCardGrid = memo((props: IUserCardGridProps) => {
         <section
             className=" "
             style={{
-                padding:viewType==='visitor' ? '0 .7em ' :'',
-                height:viewType==='visitor' ? 700:'',
-                overflowY:'scroll'
+                padding: viewType === 'visitor' ? '0 .7em ' : '',
+                height: viewType === 'visitor' ? 700 : '',
+                overflowY: 'scroll',
             }}
-          
         >
-            <div className={`${isExplorerPage ? 'user-card-grid-root' : ''}`}  >
-                {items.slice(0, displayedUsersCount).map((item) => (
-                    <ProfileCardComponent
-                        key={item.Profilid}
-                        newTag={isUserNew(item)}
-                        type={viewType}
-                        strangerUser={item}
-                        user={user}
-                        token={token}
-                        className="user-card-grid-item"
-                    />
-                ))}
-            </div>
+            {isExplorerPage ? (
+                <div className='user-card-grid-root'>
+                    {items.slice(0, displayedUsersCount).map((item) => (
+                        <ProfileCardComponent
+                            key={item.Profilid}
+                            newTag={isUserNew(item)}
+                            type={viewType}
+                            strangerUser={item}
+                            user={user}
+                            token={token}
+                            className="user-card-grid-item"
+                        />
+                    ))}
+                </div>
+            ) : (
+                <div>
+                    {items.slice(0, displayedUsersCount).map((item) => (
+                        <ProfileCardComponent_Grid
+                            key={item.Profilid}
+                            newTag={isUserNew(item)}
+                            type={viewType}
+                            strangerUser={item}
+                            user={user}
+                            token={token}
+                            className="user-card-grid-item"
+                        />
+                    ))}
+                </div>
+            )}
+
         </section>
     );
 });
 
 export default UserCardGrid;
+

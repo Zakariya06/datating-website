@@ -2,7 +2,7 @@ import { Paper, useMediaQuery } from '@material-ui/core';
 import addMinutes from 'date-fns/addMinutes';
 import React, { Suspense, lazy, memo, useContext, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
+import { Redirect, Route, Switch, useHistory, useLocation } from 'react-router-dom';
 
 import UserActionCreator from '../../actions/UserActionCreator';
 import ConfirmEmailModal from '../../components/ConfirmEmailModal';
@@ -62,6 +62,7 @@ const MainPage = memo((props: IMainpageProps) => {
     const { user } = useUserAndToken();
     const history = useHistory();
     const dispatch = useDispatch();
+    const location = useLocation();
     const { type } = useContext(ThemeContext);
 
     useEffect(() => {
@@ -107,11 +108,16 @@ const MainPage = memo((props: IMainpageProps) => {
         <div id="main" className="flex column">
             {/* {!isDesktop && isMessagesPage ? null : <Header />} 
             <Header />*/}
+            <div>
+                <Paper style={{ padding: '1em' }} elevation={0}>
+                    <Menu />
+                </Paper>
+            </div>
             <main
-                className="flex row container contentsContainer"
+                className="flex row"
                 style={{
                     padding: '20px ',
-                    paddingTop: '8em',
+                    paddingTop: '2em',
                     width: '100%',
                 }}
             >
@@ -126,7 +132,8 @@ const MainPage = memo((props: IMainpageProps) => {
                         </div>
                     </aside>
                 )} */}
-                {isDesktop ? <ProfilePreview /> : null}
+                {/* {isDesktop && location.pathname !== MESSAGES_PATH && <ProfilePreview />} */}
+                {isDesktop && !location.pathname.startsWith('/messages/') && <ProfilePreview />}
 
                 <Box
                     className=" column"
@@ -138,21 +145,6 @@ const MainPage = memo((props: IMainpageProps) => {
                         backgroundColor: type === 'light' ? 'white' : 'rgb(42, 42, 42)',
                     }}
                 >
-                    <div className="menuParent">
-                        <Paper
-                            style={{
-                                borderTopLeftRadius: '20px',
-                                borderTopRightRadius: '20px',
-                                position: 'absolute',
-                                top: '-4em',
-                                //width: { md: '70%', sm: '85%' },
-                            }}
-                            elevation={0}
-                            className="spacing margin triple bottom menuContainer"
-                        >
-                            <Menu />
-                        </Paper>
-                    </div>
                     <Suspense fallback={LoadingOverlay}>
                         <Switch>
                             <Route path={HOME_PATH} component={YourNewsPaper} exact />
@@ -199,3 +191,4 @@ const MainPageContainer = () => (
 );
 
 export default MainPageContainer;
+

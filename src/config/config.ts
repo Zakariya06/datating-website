@@ -20,14 +20,14 @@ export const Config = {
     BASE_URL_GIFT_IMAGE: process.env.REACT_APP_BASE_URL_GIFT_IMAGE || 'https://dev.yuulio.de/images/gifts/',
 
     GLOBAL_PRIMARY_COLOR: '#FF8B50',
-	GLOBAL_SITE_COINS: 'Voluus',
+    GLOBAL_SITE_COINS: 'Voluus',
     GLOBAL_SITE_NAME: 'Voluu',
     GLOBAL_SITE_DOMAIN: 'voluu.de',
     GLOBAL_IMPRESSUM_NAME: 'Lea Laetisha',
     GLOBAL_IMPRESSUM_STEUERNR: '202341983N',
     GLOBAL_AGB_ADDR: 'Skycom Pte. Ltd., 68 CIRCULAR ROAD #02-01, 049422 Singapore',
     GLOBAL_INTERN_PAYPAL: true,
-	GLOBAL_MICROPAYMENT_TLD: 'ch',
+    GLOBAL_MICROPAYMENT_TLD: 'ch',
 
     ADMIN_URL: 'https://mein-adminpanel.de/api.php',
     ADMIN_APIKEY: '',
@@ -51,7 +51,7 @@ export const Config = {
     APPLE_APP_ID: '',
     ADJUST_ID: '',
     FACEBOOK_APP_ID: '',
-   PAYPAL_TOKEN: '',
+    PAYPAL_TOKEN: '',
 
     // ADJUST
     ADJUST_EVENT_SOI: '',
@@ -69,7 +69,7 @@ export const Config = {
     TURBO_ROCKET_AMOUNT: 50,
     ICEBREAKER_AMOUNT: 7,
     FREE_DAILY_COINS_AMOUNT: 3,
-	MAX_MESSAGE_CHARS: 160,
+    MAX_MESSAGE_CHARS: 160,
 
     // default list size:
     SKIPPED_FETCH_USERS_COUNT: 10,
@@ -113,7 +113,7 @@ export const Config = {
     SEARCH_USERS_URL: 'get_searchprofiles',
     // GET_USER_URL: (id: string) => generateValidUrl(`/v1/dating/users/${id}`),
     GET_USER_URL: 'get_profile' || ((id: string) => generateValidUrl(`/v1/dating/person-users/${id}`)),
-    GET_PUBLIC_USER_URL : 'get_publicProfile' || ((id: string) => generateValidUrl(`/v1/dating/person-users/${id}`)),
+    GET_PUBLIC_USER_URL: 'get_publicProfile' || ((id: string) => generateValidUrl(`/v1/dating/person-users/${id}`)),
     // TODO:
     TRIGGER_VERIFICATION_MAIL: 'set_verificationmail',
 
@@ -132,11 +132,12 @@ export const Config = {
     GET_PRESENTS_URL: 'get_gifts',
     READ_DIALOG_URL: 'set_read_dialog',
     UPDATE_LOCATION_URL: 'set_newplz',
-    RESTORE_CHAT_URL: (id: string) => 'restore_chat',    
+    GET_DEAL_URL: 'get_deal',
+    RESTORE_CHAT_URL: (id: string) => 'restore_chat',
 
     // relationships
     USER_INTERACTION_URL: 'set_matchfinder' || '/v1/relationships',
-	USER_MATCHGAME_URL: 'set_matchgame' || '/v1/relationships',
+    USER_MATCHGAME_URL: 'set_matchgame' || '/v1/relationships',
     GET_RELATIONSHIP_USERS_URL: getRelationshipsUrl,
     SEND_VISIT_URL: 'set_visit',
 

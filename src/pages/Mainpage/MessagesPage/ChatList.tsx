@@ -1,6 +1,5 @@
 import { useTheme } from '@material-ui/core';
 import React, { Fragment, useLayoutEffect, useRef } from 'react';
-
 import IMG from '../../../assets/images/emptyStates/noChats.png';
 import ActivityIndicator from '../../../components/ActivityIndicator/ActivityIndicator';
 import EmptyState from '../../../components/EmptyState/EmptyState';
@@ -12,6 +11,7 @@ import ResourceService from '../../../services/i18n';
 import useTranslation from '../../../services/i18n/core/useTranslation';
 import ChatDateTag from './ChatDateTag';
 import ChatMessage from './ChatMessage';
+import Config from 'config';
 
 export interface IChatListProps {
     isLoading: boolean;
@@ -31,8 +31,18 @@ export function ChatList({ chatMessages, user, chatPartner, isLoading }: IChatLi
         chatListRef.current?.scrollTo({ behavior: 'auto', top: chatListRef.current?.scrollHeight });
     });
 
+    const bubbleBackground = {
+        backgroundImage: `radial-gradient(circle at 20% 20%, ${Config.GLOBAL_PRIMARY_COLOR}20 10%, transparent 20%),
+                          radial-gradient(circle at 80% 20%, ${Config.GLOBAL_PRIMARY_COLOR}20 10%, transparent 20%),
+                          radial-gradient(circle at 50% 80%, ${Config.GLOBAL_PRIMARY_COLOR}20 10%, transparent 20%),
+                          radial-gradient(circle at 10% 50%, ${Config.GLOBAL_PRIMARY_COLOR}20 10%, transparent 20%),
+                          radial-gradient(circle at 90% 50%, ${Config.GLOBAL_PRIMARY_COLOR}20 10%, transparent 20%)`,
+        backgroundSize: '300px 300px',
+        backgroundColor: isDark ? theme.palette.background.default : '#ffffff',
+    };
+
     return (
-        <article className="flex column" style={{ overflow: 'auto', flex: '1 1 0', height: 0, contain: 'strict' }} ref={chatListRef}>
+        <article className="flex column" style={{ overflow: 'auto', flex: '1 1 0', height: 0, contain: 'strict', ...bubbleBackground }} ref={chatListRef}>
             <div className="flex column" />
 
             {isLoading && (

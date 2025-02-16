@@ -176,6 +176,8 @@ export const DefaultTheme: ThemeOptions = {
         MuiListItemText: {
             primary: {
                 color: 'inherit',
+                fontWeight: 900,
+                fontSize: '1.3rem',
             },
         },
         MuiListItemIcon: {

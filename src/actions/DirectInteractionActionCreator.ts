@@ -57,6 +57,15 @@ export class DirectInteractionActionCreator {
         );
     }
 
+    public static async getDeal(token: string, user: IUser) {
+        return FetchApi.fetch(
+            generateValidUrl(Config.BASE_URL),
+            formatRequestBody(Config.GET_DEAL_URL, user.Userid, {}),
+            HttpMethods.GET,
+            token,
+            user
+        );
+    }
     public static async purchaseCoinImage(profilId: string, imageId: string, token: string, user: IUser) {
         const url = generateValidUrl(Config.PURCHASE_COIN_IMAGE_URL);
 
@@ -84,16 +93,8 @@ export class DirectInteractionActionCreator {
 
     public static async fetchPublicUser($profilid: string) {
         const url = generateValidUrl(Config.GET_PUBLIC_USER_URL);
-        return FetchApi.fetch(
-            url,
-            formatRequestBody(Config.GET_PUBLIC_USER_URL,'', { profilid: $profilid }),
-            HttpMethods.GET,
-        );
+        return FetchApi.fetch(url, formatRequestBody(Config.GET_PUBLIC_USER_URL, '', { profilid: $profilid }), HttpMethods.GET);
     }
-
-
-
-
 
     // public static async fetchGameUsers(token: string, user: IUser, count: number = 21, signal?: AbortController | null) {
     //     return FetchApi.fetch(
@@ -146,7 +147,7 @@ export class DirectInteractionActionCreator {
             token,
             user
         );
-    }    
+    }
 
     public static async triggerVisitUser(userId: string, token?: string, user?: IUser) {
         return FetchApi.fetch(
@@ -192,6 +193,18 @@ export class DirectInteractionActionCreator {
         );
     }
 
+    public static async getCounter(userId: string, token: string, user: IUser) {
+        return FetchApi.fetch(
+            generateValidUrl(Config.BASE_URL),
+            formatRequestBody(Config.GET_DEAL_URL, user.Userid, {
+                profilid: userId,
+            }),
+            HttpMethods.GET,
+            token,
+            user
+        );
+    }
+
     public static async sendIcebreakerText(userId: string, textId: number, token: string, user: IUser) {
         return FetchApi.fetch(
             generateValidUrl(Config.BASE_URL),
@@ -215,16 +228,12 @@ export class DirectInteractionActionCreator {
         );
     }
 
-    public static async triggerVerficationEmail( user: IUser) {
-
-        return FetchApi.fetch(
-            generateValidUrl(Config.BASE_URL),
-            formatRequestBody('send_verify', user.Userid, {}),
-            HttpMethods.POST,
-            '',
-            user
-        );
+    public static async triggerVerficationEmail(user: IUser) {
+        return FetchApi.fetch(generateValidUrl(Config.BASE_URL), formatRequestBody('send_verify', user.Userid, {}), HttpMethods.POST, '', user);
     }
 }
+
+
+
 
 export default DirectInteractionActionCreator;

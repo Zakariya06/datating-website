@@ -1,6 +1,7 @@
 import React from 'react';
 import { AutoSizer } from 'react-virtualized/dist/es/AutoSizer';
 import { FixedSizeList } from 'react-window';
+import { Box } from '@mui/material';
 
 import { IFeed } from '../../../models/news/IFeed';
 import NotificationComponent from '../components/NotificationComponent';
@@ -17,17 +18,19 @@ export function NewsFeedList(props: INewsFeedListProps) {
     return (
         <AutoSizer>
             {({ width, height }) => (
-                <FixedSizeList width={width} height={height} itemSize={98} itemCount={feed.length} itemData={[...feed].reverse()}>
+                <FixedSizeList
+                    width={width}
+                    height={height}
+                    itemSize={110} // Increased size for spacing
+                    itemCount={feed.length}
+                    itemData={[...feed].reverse()}
+                >
                     {(p) => {
                         const item = p.data[p.index];
                         return (
-                            <NotificationComponent
-                                key={String(item.PushId)}
-                                {...item}
-                                style={p.style}
-                                onDismiss={handleFeedDismiss}
-                                onClick={handleFeedClick}
-                            />
+                            <Box sx={{ paddingBottom: 1, paddingX: 1 }} style={p.style}>
+                                <NotificationComponent key={String(item.PushId)} {...item} onDismiss={handleFeedDismiss} onClick={handleFeedClick} />
+                            </Box>
                         );
                     }}
                 </FixedSizeList>
@@ -37,3 +40,4 @@ export function NewsFeedList(props: INewsFeedListProps) {
 }
 
 export default NewsFeedList;
+

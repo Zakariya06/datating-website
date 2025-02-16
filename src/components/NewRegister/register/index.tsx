@@ -41,6 +41,11 @@ const Register: React.FC<any> = () => {
         setInterest(value);
     };
 
+    useEffect(() => {
+        setOptIn(true);
+    }, []);
+
+
     const onClose = () => setRegisterModalOpen(false);
 
     const history = useHistory();
@@ -77,7 +82,7 @@ const Register: React.FC<any> = () => {
     const handleLookingFor = (value: number) => {
         setSearchGender(value);
     };
-    const profileId = history.location.pathname.includes('profile') ? history.location.pathname.replace('profile', 'stranger-profile') : '/';
+    const profileId = history.location.pathname.includes('profile') ? history.location.pathname.replace('profile', 'stranger-profile') : '/matchgame';
 
     const location = useLocation<{ from?: string }>();
     useEffect(() => {

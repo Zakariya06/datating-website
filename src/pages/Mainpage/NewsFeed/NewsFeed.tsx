@@ -132,15 +132,15 @@ export const NewsFeed = memo((props: INewsFeedProps) => {
     const messageFeed = feed.filter((item) => item.Pushtyp === PushTypMap.support);
     const likesFeed = feed.filter((item) => item.Pushtyp === PushTypMap.like);
     const visitorsFeed = feed.filter((item) => item.Pushtyp === PushTypMap.visit);
-    const {  type } = useContext(ThemeContext);
+    const { type } = useContext(ThemeContext);
 
     return (
         <>
-            <Box sx={{ display: { md: 'flex', sm: 'flex',xs: 'block' }, justifyContent: 'space-between', padding: isDesktop ? 2 : 0 }}>
+            <Box sx={{ display: { md: 'flex', sm: 'flex', xs: 'block' }, justifyContent: 'space-between', padding: isDesktop ? 2 : 0 }}>
                 <Paper
                     elevation={0}
                     className="spacing double  all flex user-card-grid"
-                    style={{ minHeight: 739 ,borderTopLeftRadius: '20px', borderBottomLeftRadius: '20px' }}
+                    style={{ minHeight: 739, borderTopLeftRadius: '20px', borderBottomLeftRadius: '20px' }}
                 >
                     <div className="newsfeed flex column spacing double margin top bottom">
                         <Typography
@@ -148,11 +148,11 @@ export const NewsFeed = memo((props: INewsFeedProps) => {
                                 p: !isDesktop ? 1 : 0,
                                 my: !isDesktop ? 2 : 1,
                                 mx: 'auto',
-                                fontWeight:'bold',
-                                textAlign:'center',
-                                borderRadius:'10px ',
-                                width:!isDesktop ? '150px' : 1,
-                                bgcolor:!isDesktop && type==='dark' ? 'rgb(80, 80, 80)' : null
+                                fontWeight: 'bold',
+                                textAlign: 'center',
+                                borderRadius: '10px ',
+                                width: !isDesktop ? '150px' : 1,
+                                bgcolor: !isDesktop && type === 'dark' ? 'rgb(80, 80, 80)' : null,
                             }}
                             variant="overline"
                         >
@@ -176,21 +176,22 @@ export const NewsFeed = memo((props: INewsFeedProps) => {
                         </div>
                     </div>
                 </Paper>
-                {!isDesktop && (
-                    <Divider/>
-                )}
+                {!isDesktop && <Divider />}
                 <Paper elevation={0} className="spacing double  all flex user-card-grid" style={{ minHeight: 739 }}>
-                    <Box className="newsfeed flex column spacing double margin top bottom">
-                        <Typography  sx={{
+                    <Box className="newsfeed flex column spacing double  top bottom" style={{ marginInline: '30px' }}>
+                        <Typography
+                            sx={{
                                 p: !isDesktop ? 1 : 0,
                                 my: !isDesktop ? 2 : 1,
                                 mx: 'auto',
-                                fontWeight:'bold',
-                                textAlign:'center',
-                                borderRadius:'10px ',
-                                width:!isDesktop ? '150px' : 1,
-                                bgcolor:!isDesktop && type==='dark' ? 'rgb(80, 80, 80)' : null
-                            }} variant="overline">
+                                fontWeight: 'bold',
+                                textAlign: 'center',
+                                borderRadius: '10px ',
+                                width: !isDesktop ? '150px' : 1,
+                                bgcolor: !isDesktop && type === 'dark' ? 'rgb(80, 80, 80)' : null,
+                            }}
+                            variant="overline"
+                        >
                             {MENU_VISITORS}
                         </Typography>
                         {visitorsFeed.length === 0 && !isLoading && (
@@ -206,29 +207,33 @@ export const NewsFeed = memo((props: INewsFeedProps) => {
 
                         {isLoading && <LoadingOverlay />}
 
-                        <div className="flex column" style={{
-                            minHeight:739
-                        }}>
-                            {/* <VisitorsPage/> */} 
+                        <div
+                            className="flex column"
+                            style={{
+                                minHeight: 739,
+                            }}
+                        >
+                            {/* <VisitorsPage/> */}
                             <NewsFeedList feed={visitorsFeed} handleFeedDismiss={handleFeedDismiss} handleFeedClick={handleFeedClick} />
                         </div>
                     </Box>
                 </Paper>
-                {!isDesktop && (
-                    <Divider/>
-                )}
-                <Paper elevation={0} className="spacing double  all flex user-card-grid" >
+                {!isDesktop && <Divider />}
+                <Paper elevation={0} className="spacing double  all flex user-card-grid">
                     <div className="newsfeed flex column spacing double margin top bottom">
-                        <Typography  sx={{
-                                 p: !isDesktop ? 1 : 0,
-                                 my: !isDesktop ? 2 : 1,
-                                 mx: 'auto',
-                                 fontWeight:'bold',
-                                 textAlign:'center',
-                                 borderRadius:'10px ',
-                                 width:!isDesktop ? '100px' : 1,
-                                 bgcolor:!isDesktop && type==='dark' ? 'rgb(80, 80, 80)' : null
-                            }} variant="overline">
+                        <Typography
+                            sx={{
+                                p: !isDesktop ? 1 : 0,
+                                my: !isDesktop ? 2 : 1,
+                                mx: 'auto',
+                                fontWeight: 'bold',
+                                textAlign: 'center',
+                                borderRadius: '10px ',
+                                width: !isDesktop ? '100px' : 1,
+                                bgcolor: !isDesktop && type === 'dark' ? 'rgb(80, 80, 80)' : null,
+                            }}
+                            variant="overline"
+                        >
                             {MENU_LIKES}
                         </Typography>
                         {/*{likesFeed.length === 0 && !isLoading && (
@@ -244,11 +249,14 @@ export const NewsFeed = memo((props: INewsFeedProps) => {
 
                         {isLoading && <LoadingOverlay />}
 
-                        <div className="flex column" style={{
-                            minHeight:739,
-                            maxHeight: 120
-                        }}>
-                            <LikesPage feed={likesFeed}/>
+                        <div
+                            className="flex column"
+                            style={{
+                                minHeight: 739,
+                                maxHeight: 120,
+                            }}
+                        >
+                            <LikesPage feed={likesFeed} />
                             {/*<NewsFeedList feed={likesFeed} handleFeedDismiss={handleFeedDismiss} handleFeedClick={handleFeedClick} />*/}
                         </div>
                     </div>
@@ -275,3 +283,4 @@ export const NewsFeed = memo((props: INewsFeedProps) => {
 });
 
 export default NewsFeed;
+

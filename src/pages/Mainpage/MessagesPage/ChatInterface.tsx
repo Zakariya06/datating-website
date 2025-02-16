@@ -3,7 +3,7 @@ import './ChatInterface.scss';
 import { faBars, faEllipsisV, faStar } from '@fortawesome/pro-light-svg-icons';
 import { faStar as faStarFilled } from '@fortawesome/pro-solid-svg-icons';
 import { Avatar, Divider, IconButton, Typography, useMediaQuery } from '@material-ui/core';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
@@ -24,6 +24,7 @@ import ChatOptionsMenu from './ChatOptionsMenu/ChatOptionsMenu';
 import PurchaseStarsDialog from './PurchaseStarsDialog';
 import { UnsetFavoritDialog } from './UnsetFavoritDialog/UnsetFavoritDialog';
 import { Circle } from '@mui/icons-material';
+import ThemeContext from 'theme/ThemeContext';
 
 export interface IChatInterfaceProps {
     dialog: IDialog;
@@ -33,7 +34,7 @@ export interface IChatInterfaceProps {
 export function ChatInterface(props: IChatInterfaceProps) {
     const { dialog, openDrawer } = props;
     const [anchorElOptions, setAnchorElOptions] = useState<null | HTMLElement>(null);
-    const [loading, setloading] = useState<boolean>(true);
+    const [loading, setLoading] = useState<boolean>(true);
 
     const [openPurchaseStarsDialog, setOpenPurchaseStarsDialog] = useState<boolean>(false);
     const [openUnsetFavoritDialog, setOpenUnsetFavoritDialog] = useState<boolean>(false);
@@ -65,15 +66,13 @@ export function ChatInterface(props: IChatInterfaceProps) {
     useEffect(() => {
         const chatId = uuid;
         void (async () => {
-            setloading(true);
-            // refresh the dialog on mount
+            setLoading(true);
             await dispatch(ChatActionCreator.refresh(uuid));
-            setloading(false);
+            setLoading(false);
             didMount.current = true;
         })();
 
         const interval = setInterval(() => dispatch(ChatActionCreator.getNewMessages(uuid)), Config.REFRESH_CHAT_INTERVAL);
-        // dispatch(LikesActionCreator.fetchLikes());
         return () => {
             dispatch(ChatActionCreator.removeTempDialog(chatId));
             clearInterval(interval);
@@ -88,7 +87,7 @@ export function ChatInterface(props: IChatInterfaceProps) {
     }, [dispatch, unread, uuid]);
 
     const handleUserClick = () => history.push(STRANGER_PROFILE_PATH.replace(':id?', id), { profileId: id });
-
+    const { type } = useContext(ThemeContext);
     const handleRefreshDialog = useCallback(() => dispatch(ChatActionCreator.refresh(uuid)), [dispatch, uuid]);
 
     const setFavorite = useCallback(async () => {
@@ -103,7 +102,6 @@ export function ChatInterface(props: IChatInterfaceProps) {
             );
         } else {
             if (!isFavorite) {
-                //const result = await dispatch(DirectInteractionActionCreator.setFavorite(user?.Userid, dialog.partner.id, token, user));
                 await dispatch(ChatActionCreator.setFavorite(dialog.partner));
                 dispatch(ChatActionCreator.getStarsAmount());
             }
@@ -126,45 +124,93 @@ export function ChatInterface(props: IChatInterfaceProps) {
                 className="chat-interface flex column"
                 style={{
                     height: '80vh',
+                    borderRadius: '16px',
+                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                    background: type === 'light' ? 'white' : 'black',
+                    overflow: 'hidden',
                 }}
             >
-                <section className="flex no-grow justify-content-space-between align-items-center spacing padding all" style={{ minHeight: 64 }}>
+                <section
+                    className="flex no-grow justify-content-space-between align-items-center spacing padding all"
+                    style={{
+                        minHeight: 64,
+                        background: type === 'light' ? 'white' : 'black',
+                        borderBottom: '1px solid #e9ecef',
+                        padding: '16px',
+                    }}
+                >
                     {!isDesktop && (
                         <div>
-                            <IconButton onClick={openDrawer}>
+                            <IconButton onClick={openDrawer} style={{ color: '#495057' }}>
                                 <Icon icon={faBars} />
                             </IconButton>
                         </div>
                     )}
-                    <div className="flex chat-name" onClick={handleUserClick}>
-                        <Avatar src={generateValidUrl(photo)} style={{ overflow: 'visible' }}></Avatar>
-                        <div style={{ marginLeft: 8, color: 'rgb(117, 117, 117)',display:"flex",justifyContent:"start",alignItems:"center" }} >
-                            <Typography style={{ fontWeight: 600 }} variant="h6">
+                    <div className="flex chat-name" onClick={handleUserClick} style={{ cursor: 'pointer' }}>
+                        <Avatar src={generateValidUrl(photo)} style={{ overflow: 'visible', width: 40, height: 40 }} />
+                        <div style={{ marginLeft: 12, color: '#495057', display: 'flex', alignItems: 'center' }}>
+                            <Typography style={{ fontWeight: 600, fontSize: '1.1rem' }} variant="h6">
                                 {`${name}${age ? ` | ${age}` : ''}`}
                             </Typography>
-                                 <span> {isOnline ? <Circle sx={{color:"#19cea4",fontSize:".8em",marginLeft:.5}}/> : <Circle sx={{color:"red",fontSize:".8em",marginLeft:.5}}/>}</span>
+                            <span style={{ marginLeft: 8 }}>
+                                {isOnline ? (
+                                    <Circle sx={{ color: '#19cea4', fontSize: '.8em' }} />
+                                ) : (
+                                    <Circle sx={{ color: '#ff6b6b', fontSize: '.8em' }} />
+                                )}
+                            </span>
                         </div>
                     </div>
                     {id !== 'support' && (
                         <>
                             <IconButton
-                                style={{ backgroundColor: 'rgba(0, 0, 0, 0.12)', marginRight: 10 }}
+                                style={{
+                                    backgroundColor: isFavorite ? '#fdd932' : '#e9ecef',
+                                    marginRight: 10,
+                                    borderRadius: '8px',
+                                    transition: 'background-color 0.3s ease',
+                                }}
                                 onClick={isFavorite ? handleOpenUnsetFavoritDialog : setFavorite}
                             >
-                                <Icon iconColor={isFavorite ? '#fdd932' : ''} icon={isFavorite ? faStarFilled : faStar} />
+                                <Icon iconColor={isFavorite ? '#ffffff' : '#495057'} icon={isFavorite ? faStarFilled : faStar} />
                             </IconButton>
 
-                            <IconButton style={{ backgroundColor: 'rgba(0, 0, 0, 0.12)', marginRight: 10 }} onClick={handleOptionsOpen}>
+                            <IconButton
+                                style={{
+                                    backgroundColor: '#e9ecef',
+                                    marginRight: 10,
+                                    borderRadius: '8px',
+                                    transition: 'background-color 0.3s ease',
+                                }}
+                                onClick={handleOptionsOpen}
+                            >
                                 <Icon icon={faEllipsisV} />
                             </IconButton>
                         </>
                     )}
                 </section>
 
-                <Divider variant="fullWidth" />
+                <Divider variant="fullWidth" style={{ margin: 0 }} />
 
-                <section className="flex column" style={{ padding: 24 }}>
+                <section
+                    className="flex column"
+                    style={{
+                        flex: 1,
+                        padding: '16px',
+                        overflowY: 'auto',
+                        background: type === 'light' ? 'white' : 'black',
+                    }}
+                >
                     <ChatList chatMessages={chatMessages} user={user} chatPartner={partner} isLoading={loading} />
+                </section>
+
+                <section
+                    style={{
+                        padding: '16px',
+                        borderTop: '1px solid #e9ecef',
+                        background: type === 'light' ? 'white' : 'black',
+                    }}
+                >
                     {user && dialog && (
                         <ChatInput
                             user={user}
@@ -177,6 +223,7 @@ export function ChatInterface(props: IChatInterfaceProps) {
                     )}
                 </section>
             </section>
+
             <ChatOptionsMenu
                 open={Boolean(anchorElOptions)}
                 anchorEl={anchorElOptions}
@@ -197,3 +244,4 @@ export function ChatInterface(props: IChatInterfaceProps) {
 }
 
 export default ChatInterface;
+

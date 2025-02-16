@@ -66,37 +66,44 @@ const MatchGame = () => {
     };
 
     return (
-        <Box p={{ md: 3, sm: 2, xs: 1 }} mt={{ xs: 5, sm: 0, md: 0 }} height={{ md: 'auto', sm: 'auto', xs: '100vh' }}>
+        <Box
+            p={{ md: 4, sm: 3, xs: 2 }}
+            mt={{ xs: 5, sm: 0, md: 0 }}
+            height={{ md: 'auto', sm: 'auto', xs: '100vh' }}
+            sx={{ backgroundColor: '#f5f5f5', borderRadius: 3 }}
+        >
             {items?.length > 0 &&
                 items?.map((item, i) => (
-                    <Grid container spacing={{ md: 4, sm: 3, xs: 1 }}>
+                    <Grid container spacing={{ md: 4, sm: 3, xs: 2 }} alignItems="center" key={i}>
                         {activeStep === i && (
                             <Grid item md={6} sm={7} xs={12}>
-                                <Box height={{ md: '550px', sm: '450px', xs: '500px' }} position={'relative'}>
+                                <Box
+                                    height={{ md: '550px', sm: '450px', xs: '500px' }}
+                                    position={'relative'}
+                                    sx={{ borderRadius: 3, overflow: 'hidden', boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.1)' }}
+                                >
                                     <Link to={STRANGER_PROFILE_PATH.replace(':id?', item?.Profilid)}>
                                         <img
                                             width={'100%'}
                                             height={'100%'}
-                                            style={{
-                                                objectFit: 'cover',
-                                            }}
+                                            style={{ objectFit: 'cover' }}
                                             src={generateValidUrl(getProfileImage(item))}
                                         />
                                     </Link>
 
-                                    {/* Add the UndoIcon Button */}
                                     {user?.Premium && activeStep > 0 && (
                                         <Button
                                             sx={{
                                                 position: 'absolute',
-                                                top: 18,
-                                                left: 18,
-                                                backgroundColor: `${Config.GLOBAL_PRIMARY_COLOR}`,
+                                                top: 16,
+                                                left: 16,
+                                                backgroundColor: Config.GLOBAL_PRIMARY_COLOR,
                                                 borderRadius: '50%',
-                                                p: 1,
-                                                minWidth: 'auto',
+                                                p: 1.5,
+                                                boxShadow: '0px 3px 10px rgba(0,0,0,0.2)',
                                                 '&:hover': {
-                                                    backgroundColor: `linear-gradient(180deg, ${Config.GLOBAL_PRIMARY_COLOR} 80%, #fffff 2%)`,
+                                                    backgroundColor: Config.GLOBAL_PRIMARY_COLOR,
+                                                    filter: 'brightness(1.2)',
                                                 },
                                             }}
                                             onClick={handleRecover}
@@ -108,68 +115,71 @@ const MatchGame = () => {
                                     <Box
                                         sx={{
                                             position: 'absolute',
-                                            bottom: { md: 100, sm: 90, xs: -100 },
-                                            color: 'white',
-                                            left: { md: '30%', sm: '20%', xs: '25%' },
-                                            right: '50%',
-                                            transform: 'translate(-50% -50%)',
+                                            bottom: { md: 90, sm: 80, xs: 20 },
+                                            left: '50%',
+                                            transform: 'translateX(-50%)',
+                                            display: 'flex',
+                                            gap: 2,
                                         }}
                                     >
-                                        <MobileStepper
-                                            variant="text"
-                                            steps={maxSteps}
-                                            position="static"
-                                            activeStep={activeStep}
+                                        <Button
+                                            variant="contained"
                                             sx={{
-                                                bgcolor: 'transparent',
-                                                color: 'transparent',
-                                                position: 'absolute',
-                                                top: 0,
-                                                display: 'flex',
-                                                gap: 1,
+                                                borderRadius: '50%',
+                                                p: 2,
+                                                backgroundColor: '#00000090',
+                                                '&:hover': { backgroundColor: '#000000b0' },
                                             }}
-                                            nextButton={
-                                                <Button
-                                                    variant="outlined"
-                                                    sx={{ outline: '2px solid white', borderRadius: '50%', p: 2, backgroundColor: '#00000075' }}
-                                                    size="small"
-                                                    onClick={handleNext}
-                                                    disabled={activeStep === maxSteps - 1}
-                                                >
-                                                    <FavoriteBorderIcon fontSize="large" sx={{ height: '30px', width: '30px', color: 'red' }} />
-                                                </Button>
-                                            }
-                                            backButton={
-                                                <Button
-                                                    variant="outlined"
-                                                    sx={{ outline: '2px solid white', borderRadius: '50%', p: 2, backgroundColor: '#00000075' }}
-                                                    size="small"
-                                                    onClick={handleBack}
-                                                >
-                                                    <Close fontSize="large" sx={{ height: '30px', width: '30px', color: 'white' }} />
-                                                </Button>
-                                            }
-                                        />
+                                            onClick={handleBack}
+                                        >
+                                            <Close sx={{ color: 'white', fontSize: 30 }} />
+                                        </Button>
+                                        <Button
+                                            variant="contained"
+                                            sx={{
+                                                borderRadius: '50%',
+                                                p: 2,
+                                                backgroundColor: '#00000090',
+                                                '&:hover': { backgroundColor: '#000000b0' },
+                                            }}
+                                            onClick={handleNext}
+                                            disabled={activeStep === maxSteps - 1}
+                                        >
+                                            <FavoriteBorderIcon sx={{ color: 'red', fontSize: 30 }} />
+                                        </Button>
                                     </Box>
                                 </Box>
                             </Grid>
                         )}
                         <Grid item md={6} sm={5} xs={12}>
                             {activeStep === i && (
-                                <Box>
+                                <Box
+                                    sx={{
+                                        p: 3,
+                                        borderRadius: 3,
+                                        boxShadow: 4,
+                                        bgcolor: 'white',
+                                    }}
+                                >
                                     <Link to={STRANGER_PROFILE_PATH.replace(':id?', item?.Profilid)} style={{ textDecoration: 'none' }}>
-                                        <Typography pb={{ md: 2, sm: 2, xs: 1 }} fontSize={'1.4em '} fontWeight={'bold'} className="profileCardTitle">
+                                        <Typography
+                                            pb={{ md: 2, sm: 2, xs: 1 }}
+                                            fontSize={{ md: '1.6em', sm: '1.4em', xs: '1.2em' }}
+                                            fontWeight={'bold'}
+                                            sx={{ color: '#333' }}
+                                        >
                                             {item?.Username}, {getAge(item.Birthday)}
-                                            {item?.IsOnline ? (
-                                                <Circle sx={{ color: '#19cea4', fontSize: '.7em', marginLeft: 0.5 }} />
-                                            ) : (
-                                                <Circle sx={{ color: 'red', fontSize: '.7em', marginLeft: 0.5 }} />
-                                            )}
+                                            <Circle
+                                                sx={{
+                                                    color: item?.IsOnline ? '#19cea4' : 'red',
+                                                    fontSize: '0.8em',
+                                                    ml: 0.5,
+                                                }}
+                                            />
                                         </Typography>
                                     </Link>
-                                    <Box className="profileCardText">
+                                    <Box sx={{ color: '#555', fontSize: '1em' }}>
                                         <Typography>{item.City}</Typography>
-                                        <Typography>{item.Zip}</Typography>
                                     </Box>
                                 </Box>
                             )}
@@ -182,7 +192,6 @@ const MatchGame = () => {
             <PremiumDialog open={openPremiumDialog} handleClose={() => setOpenPremiumDialog(false)} />
         </Box>
     );
-};
+}
 
 export default MatchGame;
-

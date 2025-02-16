@@ -173,7 +173,7 @@ export const de: IResourceDictionary = {
     CHAT_INTERFACE_YESTERDAY: 'Gestern',
     CHAT_INTERFACE_SEND_A_MESSAGE: 'Sende eine Nachricht...',
     PRESENTS_TITLE: 'Wähle dein Geschenk für {name}',
-    MENU_SETTINGS: 'Einstellungen',
+    MENU_SETTINGS: '⚙️ Einstellungen',
     MENU_SEARCHSETTINGS: 'Sucheinstellungen',
 
     SETTINGS_BUY_COINS: 'Coins aufladen',
@@ -188,8 +188,8 @@ export const de: IResourceDictionary = {
     SETTINGS_HELP_SUPPORT_TITLE: 'Hilfe & Support',
     SETTINGS_HELP_SUPPORT_BUSINESS_REQUEST: 'Geschäftsanfragen',
     SETTINGS_HELP_SUPPORT_CONTACT: 'Kontakt & Support',
-    SETTINGS_BONUS_CODE_TEXT: 'Jetzt Bonuscode einlösen',
-    SETTINGS_SHOP_TITLE: 'Guthaben aufladen',
+    SETTINGS_BONUS_CODE_TEXT: '🎁 Jetzt Bonuscode einlösen',
+    SETTINGS_SHOP_TITLE: '💰 Guthaben aufladen',
     SETTINGS_SHOP_TEXT: '...und chatte mit wem du willst!',
     SETTINGS_CONTACT_FORM: 'Kontakt zum Support',
 
@@ -256,10 +256,10 @@ export const de: IResourceDictionary = {
     CONFIRM: 'Bestätigen',
     MESSAGE: 'Nachricht',
 
-    MENU_HOME: 'Startseite',
-    MENU_MATCHGAME: 'Matchgame',
-    MENU_NEARBY: 'Mitglieder',
-    MENU_MESSAGES: 'Postfach',
+    MENU_HOME: '🏠 Startseite',
+    MENU_MATCHGAME: '🎮 Matchgame',
+    MENU_NEARBY: '🏙️ Mitglieder',
+    MENU_MESSAGES: '💌 Postfach',
     MENU_VISITORS: 'Profilbesucher',
     MENU_LIKES: 'Likes',
     MENU_OWN_PROFILE: 'Mein Profil',
@@ -350,7 +350,7 @@ export const de: IResourceDictionary = {
 
     HEADER_GREETER: 'Willkommen auf ' + Config.GLOBAL_SITE_NAME + ' - {name}!',
     NEWSFEED_TITLE: 'Deine Neuigkeiten',
-    NEWSFEED_VERIFY: 'Verifiziere dich!',
+    NEWSFEED_VERIFY: 'Profil verifizieren',
     NEWSFEED_VERIFIED: 'Du bist jetzt verifiziert!',
     NEWSFEED_PROFILE_PICUTRE: 'Profilbild',
     NEWSFEED_EMAIL_VERIFICATION: 'E-Mail bestätigt',

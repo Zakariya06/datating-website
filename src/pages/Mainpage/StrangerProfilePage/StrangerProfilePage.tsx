@@ -39,6 +39,8 @@ import { useHistory } from 'react-router-dom';
 
 
 export interface IStrangerProfilePageProps extends RouteComponentProps<{ id?: string }> {}
+const isMobile = window.innerWidth <= 1000;
+
 
 const settings = {
     dots: true,
@@ -87,6 +89,7 @@ const settings = {
             borderRadius: '50%',
             margin: '0 5px',
             backgroundColor: 'rgb(255 255 255 / 67%)',
+            marginTop: isMobile ? '200px' : '0px',
           }}
         >
         </div>
@@ -112,6 +115,22 @@ export const StrangerProfilePage = memo((props: IStrangerProfilePageProps) => {
     };
 
     const history = useHistory();
+
+    if(!token) {
+        useEffect(() => {
+            const handleGlobalClick = () => {
+                history.push(REGISTER_USER, { from: location.pathname });
+            };
+
+            // Füge den globalen Event-Listener hinzu
+            document.addEventListener('click', handleGlobalClick);
+
+            // Entferne den Event-Listener beim Demontieren der Komponente
+            return () => {
+                document.removeEventListener('click', handleGlobalClick);
+            };
+        }, [history]);
+    }
 
     const handleChatClick = () => {
         history.push(REGISTER_USER, { from: location.pathname });
@@ -160,8 +179,7 @@ export const StrangerProfilePage = memo((props: IStrangerProfilePageProps) => {
 
     const { Username, Pictures = [], Verified } = strangerUser ?? {};
 
-    const filteredPictures = Pictures.filter((x) => !x.ProfileImage);
-    console.log('filteredPictures', filteredPictures);
+    const filteredPictures = Pictures;
     const verified = Verified === 1 ? <Icon icon={faCheckCircle} style={{ color: '#42A5F5' }} /> : '';
 
     let strangerCity: string;
@@ -185,35 +203,55 @@ export const StrangerProfilePage = memo((props: IStrangerProfilePageProps) => {
                             backgroundColor: 'gray',
                             borderRadius: '15px',
                             height: isDesktop ? '82vh' : '50vh', // Full height of the slider
-                            width: token && isDesktop ? '16vw' : isDesktop ? '100%' : '85vw',
+                            width: token && isDesktop ? '24vw' : isDesktop ? '100%' : '85vw',
                             marginTop: '15px'
                         }}
                     >
-                        <Slider {...settings}>
-                            {filteredPictures.map((image, index) => (
+                    <Slider {...settings}>
+                        {filteredPictures.map((image, index) => (
+                            <Box
+                                key={index}
+                                sx={{
+                                    position: 'relative',
+                                    width: '100%',
+                                    height: '100%', // Set height of the slider
+                                    display: 'flex', // Ensure the image centers vertically
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    overflow: 'hidden', // Prevent content from overflowing
+                                }}
+                            >
+                                {/* Verschwommener Hintergrund */}
                                 <Box
-                                    key={index}
                                     sx={{
-                                        position: 'relative',
+                                        position: 'absolute',
+                                        top: 0,
+                                        left: 0,
                                         width: '100%',
-                                        height: '100%', // Set height of the slider
-                                        display: 'flex', // Ensure the image centers vertically
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
+                                        height: '100%',
+                                        backgroundImage: `url(${generateValidUrl(image.Picture)})`,
+                                        backgroundSize: 'cover',
+                                        backgroundPosition: 'center',
+                                        filter: 'blur(20px)', // Blur-Effekt
+                                        zIndex: 1, // Send background to the back
                                     }}
-                                >
-                                    <img
-                                        src={generateValidUrl(image.Picture)}
-                                        alt={image.Picture}
-                                        style={{
-                                            height: '780px',
-                                            width: '100%', // Maintain aspect ratio
-                                            objectFit: 'cover', // Ensure the image fills the container without distortion
-                                        }}
-                                    />
-                                </Box>
-                            ))}
-                        </Slider>
+                                />
+
+                                {/* Scharfes Bild im Vordergrund */}
+                                <img
+                                    src={generateValidUrl(image.Picture)}
+                                    alt={image.Picture}
+                                    style={{
+                                        position: 'relative', // Ensure it is above the blurred background
+                                        zIndex: 2,
+                                        height: !isDesktop ? '100%' : '780px',
+                                        width: '100%', // Maintain aspect ratio
+                                        objectFit: 'contain', // Ensure the image fills the container without distortion
+                                    }}
+                                />
+                            </Box>
+                        ))}
+                    </Slider>
                     </Box>
                 </Grid>
                 <Grid item sm={12} md={8} mt={isDesktop ? 2 : 0}>
@@ -229,7 +267,7 @@ export const StrangerProfilePage = memo((props: IStrangerProfilePageProps) => {
                         <Typography variant="overline" className="ellipsis" style={{ fontSize: '24px', textAlign: 'center' }}>
                             <Typography style={{ fontSize: '1.1em', fontWeight: 'bold' }}>
                                 {Username} {getAge(strangerUser?.Birthday ?? '')} &nbsp; {verified}
-                                {strangerUser?.IsOnline ? (
+                                {strangerUser?.IsOnline || !token ? (
                                     <Circle sx={{ color: '#19cea4', fontSize: '.7em', marginLeft: 0.5 }} />
                                 ) : (
                                     <Circle sx={{ color: 'red', fontSize: '.7em', marginLeft: 0.5 }} />
@@ -409,6 +447,51 @@ export const StrangerProfilePage = memo((props: IStrangerProfilePageProps) => {
                     </Box>
                 </Grid>
             </Grid>
+            <br></br>
+            <div
+                    className="flex wrap image-gallery justify-content-start"
+                    style={{
+                        boxShadow: '0px 17px 18px -14px rgba(0,0,0,0.5)',
+                        padding:'0 0 1em 0'
+                    }}
+                >
+                    {filteredPictures.map((picture, index) => (
+                        <StrangerPictureComponent
+                            key={picture.Picture}
+                            coins={picture.Coins}
+                            onClick={(index: number) => handleClick(index)}
+                            strangerPicture={picture.Picture}
+                            index={index}
+                        />
+                    ))}
+                </div>
+                <div style={isDesktop ? { marginLeft: 24, marginRight: 24 } : {}} className="flex column">
+                    {!isLoading && strangerUser ? (
+                        <>
+                            <article
+                                style={{
+                                    boxShadow: '0px 17px 18px -14px rgba(0,0,0,0.5)',
+                                }}
+                            >
+                            </article>
+
+                            <StrangerImageGallery
+                                currentKey={currentKey}
+                                pictures={filteredPictures}
+                                open={openDialog}
+                                onClose={() => setOpenDialog(false)}
+                                strangerUser={strangerUser}
+                                user={user}
+                                token={token}
+                                onPurchaseFinished={handleRefreshUser}
+                            />
+                        </>
+                    ) : (
+                        <div className="flex column centered">
+                            <ActivityIndicator />
+                        </div>
+                    )}
+                </div>
         </>
     );
 });

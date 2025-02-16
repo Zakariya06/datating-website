@@ -1,4 +1,4 @@
-import { Avatar, Badge, Box, Typography, useMediaQuery } from '@mui/material';
+import { Badge, useMediaQuery } from '@mui/material';
 // import ProgressiveImage from 'components/ProgressiveImage';
 import Config from 'config/config';
 import generateValidUrl from 'core/fetch/generateValidUrl';
@@ -7,17 +7,16 @@ import { PROFILE_PATH, SHOP_PATH } from 'models/Paths';
 import { getAge, getBalance, getProfileImage } from 'models/user/IUser';
 // import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { getUser } from 'selectors/AuthenticationSelectors';
+import { getUser, getUserAndToken } from 'selectors/AuthenticationSelectors';
 import CoinIcon from '../../../assets/images/coins/skipped-coin-80.svg';
 import TurboRocket from 'components/TurboRocket';
 import useTranslation from 'services/i18n/core/useTranslation';
 import { Link } from 'react-router-dom';
-import { useCallback, useContext, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import ThemeContext from 'theme/ThemeContext';
 import LogoOnly from '../../../assets/images/logos/logoonly.svg';
 import SkippedLogoAlt from '../../../assets/images/logos/logo-with-writing-white.svg';
 import SkippedLogo from '../../../assets/images/logos/logo-with-writing.svg';
-import { Button } from '@material-ui/core';
 import { Global } from '@emotion/react';
 import Icon from 'components/Icon';
 import { faCog, faLocationArrow } from '@fortawesome/pro-light-svg-icons';
@@ -36,6 +35,48 @@ import { HttpMethods } from 'core/fetch/HttpMethod';
 import ConfirmEmailModal from 'components/ConfirmEmailModal';
 import UploadVerifyPictureDialog from '../ProfilePage/components/UploadVerifyPictureDialog';
 
+import React from 'react';
+import { Card, CardContent, Avatar, Typography, Box, Button, List, ListItem, ListItemIcon, ListItemText, Paper } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import VerifiedIcon from '@mui/icons-material/Verified';
+import DirectInteractionActionCreator from 'actions/DirectInteractionActionCreator';
+import useUserAndToken from 'core/useUserAndToken';
+import TurboRocketModal from 'components/TurboRocket/TurboRocketModal';
+
+// Styled components
+const StatsBox = styled(Box)(({ theme }) => ({
+    display: 'flex',
+    justifyContent: 'center',
+    gap: theme.spacing(4),
+    width: '100%',
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+}));
+
+const TimerBox = styled(Box)(({ theme }) => ({
+    display: 'flex',
+    justifyContent: 'center',
+    gap: theme.spacing(2),
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+}));
+
+const PremiumBox = styled(Paper)(({ theme }) => ({
+    background: `linear-gradient(158.58deg, #e3b23c0a 18.6%, ${Config.GLOBAL_PRIMARY_COLOR}66 92.64%)`,
+    padding: theme.spacing(2),
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+    borderRadius: 20,
+    fontFamily: 'Nunito, -apple-system, BlinkMacSystemFont, sans-serif !important',
+}));
+const timeBoxStyle = {
+    textAlign: 'center',
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+    padding: '8px 16px',
+    borderRadius: '8px',
+    cursor: 'pointer',
+};
 const ProfilePreview = (props: any) => {
     // const [isProfileImageDialogOpen, setIsProfileImageDialogOpen] = useState<boolean>(false);
     const user = useSelector(getUser);
@@ -54,12 +95,99 @@ const ProfilePreview = (props: any) => {
     const [selectedProduct, setSelectedProduct] = useState<any>();
     const [selectedPayment, setSelectedPayment] = useState<PaymentMethod>(PaymentMethods.PAY_PAL);
     const [openUploadVerifyPicture, setOpenUploadVerifyPicture] = useState<boolean>(false);
+    const [openTurboRocketDialog, setOpenTurboRocketDialog] = useState<boolean>(false);
 
     const [open, setOpen] = useState<boolean>(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const [paypalVisible, setPayPalVisible] = useState(true);
     const redirectToProfile = useHistoryPush(PROFILE_PATH);
+    const [counter, setCounter] = useState<any>();
+
+    const [hours, setHours] = useState<any>();
+    const [minutes, setMinutes] = useState<any>();
+    const [seconds, setSeconds] = useState<any>();
+    const [timeLeft, setTimeLeft] = useState<{
+        hours: number;
+        minutes: number;
+        seconds: number;
+    }>({
+        hours: 0,
+        minutes: 0,
+        seconds: 0,
+    });
+
+    useEffect(() => {
+        if (counter && counter[0]?.End) {
+            const calculateTimeLeft = () => {
+                const endDateTime = new Date(counter[0].End);
+                const now = new Date();
+                const difference = endDateTime.getTime() - now.getTime();
+
+                if (difference > 0) {
+                    // Calculate days first
+                    const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                    // Add the days to hours calculation
+                    const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)) + days * 24;
+                    const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+                    setTimeLeft({
+                        hours,
+                        minutes,
+                        seconds,
+                    });
+                } else {
+                    // Timer has expired
+                    setTimeLeft({
+                        hours: 0,
+                        minutes: 0,
+                        seconds: 0,
+                    });
+                }
+            };
+
+            // Calculate initial time
+            calculateTimeLeft();
+
+            // Update every second
+            const timer = setInterval(calculateTimeLeft, 1000);
+
+            // Cleanup interval on component unmount
+            return () => clearInterval(timer);
+        }
+    }, [counter]);
+
+    const TimerDisplay = () => (
+        <TimerBox>
+            <Box sx={timeBoxStyle}>
+                <Typography variant="h5">{String(timeLeft.hours).padStart(2, '0')}</Typography>
+                <Typography variant="caption">Stunden</Typography>
+            </Box>
+            <Typography variant="h5">:</Typography>
+            <Box sx={timeBoxStyle}>
+                <Typography variant="h5">{String(timeLeft.minutes).padStart(2, '0')}</Typography>
+                <Typography variant="caption">Minuten</Typography>
+            </Box>
+            <Typography variant="h5">:</Typography>
+            <Box sx={timeBoxStyle}>
+                <Typography variant="h5">{String(timeLeft.seconds).padStart(2, '0')}</Typography>
+                <Typography variant="caption">Sekunden</Typography>
+            </Box>
+        </TimerBox>
+    );
+
+    const { token } = useUserAndToken();
+    useEffect(() => {
+        if (user && token) {
+            void (async () => {
+                const res = await (await DirectInteractionActionCreator.getDeal(token, user)).json();
+
+                setCounter(res);
+            })();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     function getImageForAmount(coins: number) {
         if (coins <= 85) {
@@ -113,7 +241,7 @@ const ProfilePreview = (props: any) => {
 
     return (
         <div>
-            <Box
+            {/* <Box
                 bgcolor={type === 'light' ? 'white' : 'rgb(42, 42, 42)'}
                 height={{ xs: 'none' }}
                 width={'270px'}
@@ -121,6 +249,7 @@ const ProfilePreview = (props: any) => {
                 borderRadius={'20px'}
                 p={2}
             >
+                heello
                 <Box
                     sx={{
                         display: 'flex',
@@ -154,7 +283,6 @@ const ProfilePreview = (props: any) => {
                     to={PROFILE_PATH}
                     alt="avater"
                 />
-
                 <Typography textAlign={'center'} fontSize={'2em'} mt={2}>
                     {Username}, {Birthday && getAge(Birthday)}
                 </Typography>
@@ -184,14 +312,14 @@ const ProfilePreview = (props: any) => {
                     button
                     onClick={() => setOpenConfirmEmailDialog(true)}
                 />
-                {Boolean(user?.Verifiy) &&
+                {Boolean(user?.Verifiy) && (
                     <NewsFeedUserStatItem
                         text={NEWSFEED_VERIFY}
                         value={Boolean(user?.Verified)}
                         button
                         onClick={() => setOpenUploadVerifyPicture(true)}
                     />
-                }          
+                )}
                 <Box
                     sx={{
                         display: 'flex',
@@ -209,8 +337,8 @@ const ProfilePreview = (props: any) => {
                         </div>
                     </Link>
                 </Box>
-            </Box>
-            <Box
+            </Box> */}
+            {/* <Box
                 bgcolor={type === 'light' ? 'white' : 'rgb(42, 42, 42)'}
                 height={{ xs: 'none' }}
                 width={'270px'}
@@ -235,9 +363,127 @@ const ProfilePreview = (props: any) => {
                 <Button onClick={() => setOpenPremiumDialog(true)} style={{ paddingLeft: 0, paddingRight: 0, marginTop: 10 }} fullWidth>
                     Premium
                 </Button>
-            </Box>
+            </Box> */}
+            <Card sx={{ maxWidth: 400, margin: 'auto', backgroundColor: type === 'light' ? 'white' : 'rgb(42, 42, 42)' }}>
+                <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', p: 3 }}>
+                    {/* Profile Header */}
+                    <Avatar sx={{ width: 80, height: 80, bgcolor: 'grey.200', mb: 2 }} component={Link} to={PROFILE_PATH}>
+                        <Avatar sx={{ width: 48, height: 48, bgcolor: 'grey.400' }} />
+                    </Avatar>
+                    <Box sx={{ textAlign: 'center', mb: 2 }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
+                            <Typography variant="h5" component="h2">
+                                {Username}, {Birthday && getAge(Birthday)}
+                            </Typography>
+                            {user?.Verified == 1 && (
+                                <VerifiedIcon style={{ color: Config.GLOBAL_PRIMARY_COLOR }} />
+                            )}
+
+                        </Box>
+                        <Typography color={type === 'light' ? 'text.secondary' : 'white'}>Stuttgart (Baden-Württemberg), Deutschland</Typography>
+                    </Box>
+                    <NewsFeedUserStatItem
+                        text={NEWSFEED_EMAIL_VERIFICATION}
+                        value={Number(user?.Verifiy)}
+                        button
+                        onClick={() => setOpenConfirmEmailDialog(true)}
+                    />
+                    <br></br>
+                    <NewsFeedUserStatItem
+                        text={NEWSFEED_VERIFY}
+                        value={Number(user?.Verified)}
+                        button
+                        onClick={() => setOpenUploadVerifyPicture(true)}
+                    />
+                    {/* Stats */}
+                    <StatsBox>
+                        <Link to={SHOP_PATH} style={{ textDecoration: 'none' }}>
+                            <Box sx={timeBoxStyle}>
+                                <Typography variant="h6">💰</Typography>
+                            </Box>
+                        </Link>
+                        <Box onClick={() => setOpenTurboRocketDialog(true)} sx={timeBoxStyle}>
+                            <Typography variant="h6">🚀</Typography>
+                        </Box>
+                        <Box onClick={() => setOpenPremiumDialog(true)} sx={timeBoxStyle}>
+                            <Typography variant="h6">👑</Typography>
+                        </Box>
+                    </StatsBox>
+
+                    {/* Timer */}
+                    {counter && counter[0]?.Enabled === 1 && (
+                        <>
+                            <Box sx={{ width: '100%', textAlign: 'center' }}>
+                            <Typography
+                                variant="h6"
+                                sx={{
+                                    mb: 1,
+                                    textTransform: 'uppercase',
+                                    fontWeight: 'bold'
+                                }}
+                                >
+                                Bester {Config.GLOBAL_SITE_NAME} Deal! 🎉
+                                </Typography>
+                                <TimerDisplay />
+                            </Box>
+                            <PremiumBox>
+                                <Typography variant="h6" sx={{ mb: 2, fontWeight: '900' }} color={type === 'light' ? 'black' : 'text.secondary'}>
+                                    Spare 33% auf volle 3 Monate
+                                </Typography>
+                                <List dense>
+                                    <ListItem>
+                                        <ListItemIcon>
+                                            <CheckCircleIcon sx={{ color: Config.GLOBAL_PRIMARY_COLOR }} />
+                                        </ListItemIcon>
+                                        <ListItemText
+                                            primary="Genieße alle Premium-Vorteile"
+                                            sx={{ color: type === 'light' ? 'black' : 'text.secondary' }}
+                                        />
+                                    </ListItem>
+                                    <ListItem>
+                                        <ListItemIcon>
+                                            <CheckCircleIcon sx={{ color: Config.GLOBAL_PRIMARY_COLOR }} />
+                                        </ListItemIcon>
+                                        <ListItemText primary="Likes ohne Limit" sx={{ color: type === 'light' ? 'black' : 'text.secondary' }} />
+                                    </ListItem>
+                                    <ListItem>
+                                        <ListItemIcon>
+                                            <CheckCircleIcon sx={{ color: Config.GLOBAL_PRIMARY_COLOR }} />
+                                        </ListItemIcon>
+                                        <ListItemText
+                                            primary="Unbegrenzt Profile aufdecken"
+                                            sx={{ color: type === 'light' ? 'black' : 'text.secondary' }}
+                                        />
+                                    </ListItem>
+                                </List>
+                                <Box sx={{ mt: 2 }}>
+                                    <Typography sx={{ textDecoration: 'line-through', color: 'text.secondary' }}>59,97 € / mon.</Typography>
+                                    <Typography variant="h6" color={Config.GLOBAL_PRIMARY_COLOR} sx={{ fontWeight: 'bold' }}>
+                                        39,99 € / mon.
+                                    </Typography>
+                                </Box>
+                            </PremiumBox>
+
+                            <Button
+                                variant="contained"
+                                fullWidth
+                                onClick={() => setOpenPremiumDialog(true)}
+                                sx={{
+                                    bgcolor: 'warning.main',
+                                    '&:hover': {
+                                        bgcolor: 'warning.dark',
+                                    },
+                                }}
+                            >
+                                Weiter - 39,99 € gesamt!
+                            </Button>
+                    </>
+                )}
+                </CardContent>
+            </Card>
             <UploadVerifyPictureDialog open={openUploadVerifyPicture} onClose={() => setOpenUploadVerifyPicture(false)} />
             <ConfirmEmailModal isOpen={openConfirmEmailDialog} onClose={() => setOpenConfirmEmailDialog(false)} />
+            <TurboRocketModal open={openTurboRocketDialog} onClose={() => setOpenTurboRocketDialog(false)} />
             <PremiumDialog
                 open={openPremiumDialog}
                 handleClose={() => setOpenPremiumDialog(false)}
@@ -264,4 +510,3 @@ const ProfilePreview = (props: any) => {
 };
 
 export default ProfilePreview;
-

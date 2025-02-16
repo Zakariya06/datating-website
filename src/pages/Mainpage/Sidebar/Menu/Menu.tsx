@@ -2,14 +2,14 @@ import './Menu.scss';
 
 import { faEllipsisV, faEnvelope, faGlobeEurope, faMoon, faSignOut, faUser } from '@fortawesome/pro-light-svg-icons';
 // import { faEnvelope, faEye, faGlobeEurope, faHeart, faNewspaper } from '@fortawesome/pro-light-svg-icons';
-import {  List, ListItem, ListItemIcon, Popover, ListItemText, MenuItem, IconButton, Typography } from '@material-ui/core';
+import { List, ListItem, ListItemIcon, Popover, ListItemText, MenuItem, IconButton, Typography, useMediaQuery } from '@material-ui/core';
 import React, { memo, useCallback, useContext, useState } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 import { Link, useHistory, useRouteMatch } from 'react-router-dom';
 
 import Icon from '../../../../components/Icon';
 //import { HOME_PATH, LIKES_PATH, MESSAGES_PATH, VISITORS_PATH, NEWS_PATH, EXPLORER_PATH } from '../../../../models/Paths';
-import { HOME_PATH,  MESSAGES_PATH, EXPLORER_PATH, MATCH_PATH, SETTINGS_PATH } from '../../../../models/Paths';
+import { HOME_PATH, MESSAGES_PATH, EXPLORER_PATH, MATCH_PATH, SETTINGS_PATH } from '../../../../models/Paths';
 import { IState } from '../../../../models/state';
 import { getLikes, getVisitors } from '../../../../selectors/LikesSelectors';
 import { getUnreadChats } from '../../../../services/Chat/selectors/ChatSelectors';
@@ -18,6 +18,10 @@ import ChatUnreadDot from '../../MessagesPage/ChatUnreadDot';
 import isNullOrUndefined from 'core/typeguards/isNullOrUndefined';
 import ThemeContext from 'theme/ThemeContext';
 import SignOutComponent from 'components/SignOutComponent';
+import LogoOnly from 'assets/images/logos/logoonly.svg';
+import SkippedLogoAlt from 'assets/images/logos/logo-with-writing-white.svg';
+import SkippedLogo from 'assets/images/logos/logo-with-writing.svg';
+
 
 export interface IMenuProps {}
 
@@ -39,6 +43,8 @@ export const Menu = memo((props: IMenuProps) => {
     const [signOutDialogOpen, setSignOutDialogOpen] = useState<boolean>(false);
     const openSignOutDialog = useCallback(() => setSignOutDialogOpen(true), []);
     const closeSignOutDialog = useCallback(() => setSignOutDialogOpen(false), []);
+
+    const isDesktop = useMediaQuery('(min-width:900px)', { defaultMatches: true });
 
     const { unreadMessages } = useSelector(
         (state: IState) => ({
@@ -68,26 +74,50 @@ export const Menu = memo((props: IMenuProps) => {
 
     return (
         <>
-        <List className="topMenu">
-            <ListItem button component={Link} to={HOME_PATH} selected={Boolean(isHomeSelected)} disableRipple>
-                <ListItemText primary={MENU_HOME} />
-            </ListItem>
+            <List className="topMenu" style={{ gap: '1em' }}>
+                <a href="/">
+                    <img
+                        draggable={false}
+                        src={!isDesktop ? LogoOnly : type === 'dark' ? SkippedLogoAlt : SkippedLogo}
+                        style={{ height: 38, userSelect: 'none' }}
+                    />
+                </a>
 
-            <ListItem button component={Link} onClick={() => { history.push(MATCH_PATH); window.location.reload(); }}  to={MATCH_PATH} selected={Boolean(isMatchgameSelected)} disableRipple>
-                <ListItemText primary={MENU_MATCHGAME} />
-            </ListItem>
-         
-            <ListItem button component={Link} to={EXPLORER_PATH} selected={Boolean(isExplorerSelected)} disableRipple replace={false}>
-                <ListItemText primary={MENU_NEARBY} />
-            </ListItem>
+                <ListItem button component={Link} to={HOME_PATH} selected={Boolean(isHomeSelected)} disableRipple>
+                    <ListItemText primary={MENU_HOME} style={{ textAlign: 'center' }} />
+                </ListItem>
 
-            <ListItem button component={Link} to={MESSAGES_PATH.replace('/:id?', '')} selected={Boolean(isMessagesSelected)} disableRipple replace>
-                <ListItemText primary={MENU_MESSAGES} />
-                {unreadMessages > 0 && (
-                    <ChatUnreadDot unread={unreadMessages} />
-                )}
-            </ListItem>
-            {/*<ListItem button component={Link} to={VISITORS_PATH} selected={Boolean(isVisitorsSelected)} disableRipple>
+                <ListItem
+                    button
+                    component={Link}
+                    onClick={() => {
+                        history.push(MATCH_PATH);
+                        window.location.reload();
+                    }}
+                    to={MATCH_PATH}
+                    selected={Boolean(isMatchgameSelected)}
+                    disableRipple
+                >
+                    <ListItemText primary={MENU_MATCHGAME} style={{ textAlign: 'center' }} />
+                </ListItem>
+
+                <ListItem button component={Link} to={EXPLORER_PATH} selected={Boolean(isExplorerSelected)} disableRipple replace={false}>
+                    <ListItemText primary={MENU_NEARBY} style={{ textAlign: 'center' }} />
+                </ListItem>
+
+                <ListItem
+                    button
+                    component={Link}
+                    to={MESSAGES_PATH.replace('/:id?', '')}
+                    selected={Boolean(isMessagesSelected)}
+                    disableRipple
+                    replace
+                >
+                    <ListItemText primary={MENU_MESSAGES} style={{ textAlign: 'center' }} />
+
+                    {unreadMessages > 0 && <ChatUnreadDot unread={unreadMessages} />}
+                </ListItem>
+                {/*<ListItem button component={Link} to={VISITORS_PATH} selected={Boolean(isVisitorsSelected)} disableRipple>
                 <ListItemIcon>
                     <Icon icon={faEye} />
                 </ListItemIcon>
@@ -116,50 +146,49 @@ export const Menu = memo((props: IMenuProps) => {
                 <ListItemText primary={MENU_NEWS} />
             </ListItem>*/}
 
-            <ListItem button component={Link} to={SETTINGS_PATH} selected={Boolean(isSettingsSelected)} disableRipple>
-                <ListItemText primary={MENU_SETTINGS} />
-            </ListItem>
+                <ListItem button component={Link} to={SETTINGS_PATH} selected={Boolean(isSettingsSelected)} disableRipple>
+                    <ListItemText primary={MENU_SETTINGS} style={{ textAlign: 'center' }} />
+                </ListItem>
 
-            <div className="dropdown">
-                <div className="flex align-items-center">
-                    <IconButton onClick={handleClick} className="spacing double margin left">
-                        <Icon icon={faEllipsisV} />
-                    </IconButton>
+                <div className="dropdown">
+                    <div className="flex align-items-center">
+                        <IconButton onClick={handleClick} className="spacing double margin left">
+                            <Icon icon={faEllipsisV} />
+                        </IconButton>
+                    </div>
                 </div>
-            </div>
 
-            <Popover
-                anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'center',
-                }}
-                transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'center',
-                }}
-                anchorEl={anchorEl}
-                open={!isNullOrUndefined(anchorEl)}
-                onClose={handleMenuClose}
-                onClick={handleMenuClose}
-                PaperProps={{ className: 'spacing double padding top bottom' }}
-            >
-
-                <MenuItem onClick={toggleTheme}>
-                    <ListItemIcon>
-                        <Icon icon={faMoon} />
-                    </ListItemIcon>
-                    {MENU_DARK_MODE}
-                </MenuItem>
-                <MenuItem onClick={openSignOutDialog}>
-                    <ListItemIcon>
-                        <Icon color="error" icon={faSignOut} />
-                    </ListItemIcon>
-                    <Typography color="error">{SETTINGS_LOGOUT}</Typography>
-                </MenuItem>
-            </Popover>      
-        </List>
-        <SignOutComponent onClose={closeSignOutDialog} open={signOutDialogOpen} />
-    </>
+                <Popover
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'center',
+                    }}
+                    transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'center',
+                    }}
+                    anchorEl={anchorEl}
+                    open={!isNullOrUndefined(anchorEl)}
+                    onClose={handleMenuClose}
+                    onClick={handleMenuClose}
+                    PaperProps={{ className: 'spacing double padding top bottom' }}
+                >
+                    <MenuItem onClick={toggleTheme}>
+                        <ListItemIcon>
+                            <Icon icon={faMoon} />
+                        </ListItemIcon>
+                        {MENU_DARK_MODE}
+                    </MenuItem>
+                    <MenuItem onClick={openSignOutDialog}>
+                        <ListItemIcon>
+                            <Icon color="error" icon={faSignOut} />
+                        </ListItemIcon>
+                        <Typography color="error">{SETTINGS_LOGOUT}</Typography>
+                    </MenuItem>
+                </Popover>
+            </List>
+            <SignOutComponent onClose={closeSignOutDialog} open={signOutDialogOpen} />
+        </>
     );
 });
 

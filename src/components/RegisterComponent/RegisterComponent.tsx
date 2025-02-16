@@ -64,7 +64,6 @@ export const RegisterComponent = memo((props: any) => {
     const handleClose = useHistoryPush(MAIN_PATH);
     const history = useHistory();
     const profileId = history.location.pathname.includes('profile') ? history.location.pathname.replace('profile', 'stranger-profile') : '/';
-    console.log(history.location, '<<<<<<<<<>>>>>>>>>', profileId);
 
     const handleRegister = async () => {
         if (
@@ -96,7 +95,6 @@ export const RegisterComponent = memo((props: any) => {
                 preferredGender: searchGender,
             };
 
-            console.log('payload', register);
             setLoading(true);
             const result = await dispatch(AuthenticationActionCreator.registerUser(register));
             // console.log('result',result);

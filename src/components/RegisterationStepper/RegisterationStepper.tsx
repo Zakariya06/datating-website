@@ -56,7 +56,6 @@ export const RegisterationStepper = memo((props: IRegisterComponentProps) => {
                   steps.findIndex((step, i) => !(i in completed))
                 : activeStep + 1;
         setActiveStepS(newActiveStep);
-        console.log(activeStep);
     };
 
     const handleBack = () => {

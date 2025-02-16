@@ -1,8 +1,24 @@
 .chat-interface {
+    border-radius: 16px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        background-color: #ffffff;
+        overflow: hidden;
     .chat-name {
-        cursor: pointer;
-    }
-
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+    
+            &:hover {
+                opacity: 0.8;
+            }
+        }
+    
+        .MuiIconButton-root {
+            transition: background-color 0.3s ease;
+    
+            &:hover {
+                background-color: rgba(0, 0, 0, 0.1);
+            }
+        }
     .chat-message {
         max-width: 80%;
         margin-bottom: 16px;

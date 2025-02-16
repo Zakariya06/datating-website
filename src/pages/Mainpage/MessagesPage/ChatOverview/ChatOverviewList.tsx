@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect, useState } from 'react';
+import React, { memo, useCallback, useContext, useEffect, useState } from 'react';
 import { AutoSizer } from 'react-virtualized/dist/es/AutoSizer';
 import { FixedSizeList } from 'react-window';
 import Box from '@material-ui/core/Box';
@@ -12,6 +12,7 @@ import { IState } from 'models/state';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { getRestoreChatStatus } from 'services/Chat/selectors/ChatSelectors';
 import ChatActionCreator from 'services/Chat/actions/ChatActionCreator';
+import ThemeContext from 'theme/ThemeContext';
 
 export interface IChatOverviewListProps {
     selectedDialogId?: string;
@@ -29,7 +30,7 @@ export const ChatOverviewList = memo((props: IChatOverviewListProps) => {
     const [isCoinModalOpen, setisCoinModalOpen] = useState<boolean>(false);
     const dispatch = useDispatch();
     const { restoreChatStatus } = useSelector((state: IState) => ({ restoreChatStatus: getRestoreChatStatus(state) }), shallowEqual);
-
+    const { type } = useContext(ThemeContext);
     const handleClose = useCallback(() => {
         setisCoinModalOpen(false);
         setCurrentChatUuid(null);
@@ -71,7 +72,7 @@ export const ChatOverviewList = memo((props: IChatOverviewListProps) => {
                     {({ index, data, style }) => {
                         const chat = data[index];
                         return (
-                            <div style={style} key={chat.uuid}>
+                            <div style={{ ...style, background: type === 'light' ? 'white' : 'black' }} key={chat.uuid}>
                                 <ChatListItem dialog={chat} onChatClick={onChatClick} selected={chat.uuid === selectedDialogId} />
                                 {chat.offen == '-1' && chat.uuid != 'support' ? (
                                     <Box
@@ -111,3 +112,4 @@ export const ChatOverviewList = memo((props: IChatOverviewListProps) => {
 });
 
 export default ChatOverviewList;
+

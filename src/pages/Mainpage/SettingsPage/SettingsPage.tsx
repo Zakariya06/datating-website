@@ -1,4 +1,4 @@
-import { faChevronRight, faLanguage, faUsersSlash, faEnvelope , faKey } from '@fortawesome/pro-regular-svg-icons';
+import { faChevronRight, faLanguage, faUsersSlash, faEnvelope, faKey } from '@fortawesome/pro-regular-svg-icons';
 import {
     Button,
     List,
@@ -11,7 +11,7 @@ import {
     SvgIcon,
     TextField,
     Typography,
-    useMediaQuery
+    useMediaQuery,
 } from '@material-ui/core';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -74,83 +74,101 @@ export const SettingsPage = (props: ISettingsPageProps) => {
 
     return (
         <div className="flex column full-width spacing padding triple right left">
-            <Typography variant="h5" className="text-align-center spacing margin double bottom">
+            <h1 className="text-2xl font-semibold mb-8 text-center text-gray-800" style={{ color: '#ed6c02' }}>
                 {MENU_SETTINGS}
-            </Typography>
+            </h1>
             <div className="flex column">
                 <div className={isSmallScreen ? 'flex column no-grow full-width' : 'flex no-grow full-width'}>
-                    <Paper className="full-width spacing margin triple right" square>
-                        <ListItem button component={Link} to={SHOP_PATH}>
-                            <ListItemIcon>
-                                <SvgIcon style={{ height: 40, width: 40, marginRight: 8 }}>
-                                    <Coin />
-                                </SvgIcon>
-                            </ListItemIcon>
-                            <ListItemText
-                                primaryTypographyProps={{ style: { color: '#F3CC30' } }}
-                                secondaryTypographyProps={{ style: { color: '#F3CC30' } }}
-                                primary={SETTINGS_SHOP_TITLE}
-                                secondary={SETTINGS_SHOP_TEXT}
-                            />
-                        </ListItem>
-                    </Paper>
+                    <ListItem
+                        button
+                        component={Link}
+                        to={SHOP_PATH}
+                        style={{ padding: '16px', boxShadow: 'rgba(0, 0, 0, 0.1) 0px 4px 12px', borderRadius: '8px', marginRight: '20px' }}
+                    >
+                        <ListItemIcon>
+                            <SvgIcon style={{ height: 40, width: 40, marginRight: 8 }}>
+                                <Coin />
+                            </SvgIcon>
+                        </ListItemIcon>
+                        <ListItemText primaryTypographyProps={{ style: { fontWeight: 700 } }} primary={SETTINGS_SHOP_TITLE}  />
+                    </ListItem>
 
                     {isSmallScreen && <div className="spacing margin double bottom" />}
-                    <Paper className="full-width" square>
-                        <List>
-                            <ListItem button onClick={() => setOpenBonusCodeDialog(true)}>
-                                <ListItemIcon>
-                                    <SvgIcon style={{ height: 40, width: 40, marginRight: 8 }}>
-                                        <CoinStack />
-                                    </SvgIcon>
-                                </ListItemIcon>
-                                <ListItemText primaryTypographyProps={{ style: { fontWeight: 700 } }} primary={SETTINGS_BONUS_CODE_TEXT} />
-                            </ListItem>
-                        </List>
-                    </Paper>
+
+                    <ListItem
+                        button
+                        onClick={() => setOpenBonusCodeDialog(true)}
+                        style={{ padding: '16px', boxShadow: 'rgba(0, 0, 0, 0.1) 0px 4px 12px', borderRadius: '8px', marginRight: '20px' }}
+                    >
+                        <ListItemIcon>
+                            <SvgIcon style={{ height: 40, width: 40, marginRight: 8 }}>
+                                <CoinStack />
+                            </SvgIcon>
+                        </ListItemIcon>
+                        <ListItemText primaryTypographyProps={{ style: { fontWeight: 700 } }} primary={SETTINGS_BONUS_CODE_TEXT} />
+                    </ListItem>
                 </div>
-                    <>
-                    <Typography className="spacing margin double top bottom" variant="h6">
+                <>
+                    <Typography
+                        className="spacing  double top bottom"
+                        variant="h6"
+                        style={{ fontWeight: 600, color: '#ed6c02', marginTop: '20px', marginBottom: '10px' }}
+                    >
                         {SETTINGS_ACCOUNT_SETTINGS}
                     </Typography>
                     <div className={isSmallScreen ? 'flex column no-grow' : 'flex no-grow'}>
-                        <Paper className="flex align-items-center spacing padding top bottom right" square>
-                            <Typography className="spacing padding double left right" style={{ whiteSpace: 'pre' }}>
+                        <Paper
+                            className="flex align-items-center spacing padding top bottom right"
+                            style={{ borderRadius: '12px', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)' }}
+                        >
+                            <Typography className="spacing padding double left right" style={{ whiteSpace: 'pre', color: '#ed6c02' }}>
                                 {LOGIN_EMAIL_INPUT}:{' '}
                             </Typography>
                             <TextField
-                                inputProps={{ style: { cursor: 'pointer' } }}
+                                inputProps={{ style: { cursor: 'pointer', color: '#ed6c02', background: '#FFF8E1' } }}
                                 disabled
                                 onClick={() => setOpenConfirmEmailDialog(true)}
                                 fullWidth
                                 defaultValue={Email}
+                                variant="outlined"
+                                style={{ borderRadius: '8px' }}
                             />
                         </Paper>
                         {isSmallScreen && <div className="spacing margin double bottom" />}
-                        <Paper className="full-width" square>
+                        <Paper
+                            className="full-width"
+                            style={{ borderRadius: '12px', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)', marginLeft: '20px' }}
+                        >
                             <List>
-                                <ListItem button onClick={() => setOpenForgotPasswordDialog(true)}>
+                                <ListItem button onClick={() => setOpenForgotPasswordDialog(true)} style={{ padding: '16px' }}>
                                     <ListItemIcon>
-                                        <Icon icon={faKey} />
+                                        <Icon icon={faKey} style={{ color: '#ed6c02' }} />
                                     </ListItemIcon>
                                     <ListItemText primary={PASSWORD_BUTTON} />
                                     <ListItemSecondaryAction>
-                                        <Icon icon={faChevronRight} />
+                                        <Icon icon={faChevronRight} style={{ color: '#ed6c02' }} />
                                     </ListItemSecondaryAction>
                                 </ListItem>
                             </List>
-                        </Paper>                        
+                        </Paper>
                     </div>
 
-                    <Typography className="spacing margin double top bottom" variant="h6">
+                    <Typography
+                        className="spacing  double top bottom"
+                        variant="h6"
+                        style={{ fontWeight: 600, color: '#ed6c02', marginTop: '20px', marginBottom: '10px' }}
+                    >
                         {SETTINGS_APP_SETTINGS}
                     </Typography>
                     <div className={isSmallScreen ? 'flex column no-grow' : 'flex no-grow'}>
-                        <Paper className="full-width spacing margin triple right" square>
+                        <Paper
+                            className="full-width spacing margin triple right"
+                            style={{ borderRadius: '12px', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)' }}
+                        >
                             <List>
-                                <ListItem onClick={() => setOpenBlockedUsersDialog(true)} button color="error" style={{ color: '#FE0000' }}>
+                                <ListItem onClick={() => setOpenBlockedUsersDialog(true)} button style={{ color: '#FE0000', padding: '16px' }}>
                                     <ListItemIcon>
-                                        <Icon icon={faUsersSlash} />
+                                        <Icon icon={faUsersSlash} style={{ color: '#FE0000' }} />
                                     </ListItemIcon>
                                     <ListItemText primary={BLOCKED_USERS_TITLE} />
                                     <ListItemSecondaryAction>
@@ -160,15 +178,15 @@ export const SettingsPage = (props: ISettingsPageProps) => {
                             </List>
                         </Paper>
                         {isSmallScreen && <div className="spacing margin double bottom" />}
-                        <Paper className="full-width" square>
+                        <Paper className="full-width" style={{ borderRadius: '12px', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)' }}>
                             <List>
-                                <ListItem button onClick={() => setChangeLanguageDialogOpen(true)}>
+                                <ListItem button onClick={() => setChangeLanguageDialogOpen(true)} style={{ padding: '16px' }}>
                                     <ListItemIcon>
-                                        <Icon icon={faLanguage} />
+                                        <Icon icon={faLanguage} style={{ color: '#ed6c02' }} />
                                     </ListItemIcon>
                                     <ListItemText primary={SETTINGS_CHANGE_LANGUAGE_TITLE} />
                                     <ListItemSecondaryAction>
-                                        <Icon icon={faChevronRight} />
+                                        <Icon icon={faChevronRight} style={{ color: '#ed6c02' }} />
                                     </ListItemSecondaryAction>
                                 </ListItem>
                             </List>
@@ -178,72 +196,86 @@ export const SettingsPage = (props: ISettingsPageProps) => {
 
                 <div className={isSmallScreen ? 'flex no-grow full-width column' : 'flex no-grow full-width'}>
                     <div className="full-width flex column spacing margin triple right">
-                        <Typography className="spacing margin double top bottom" variant="h6">
+                        <Typography
+                            className="spacing  double top bottom"
+                            variant="h6"
+                            style={{ fontWeight: 600, color: '#ed6c02', marginTop: '20px', marginBottom: '10px' }}
+                        >
                             {SETTINGS_HELP_SUPPORT_TITLE}
                         </Typography>
-                        <Paper className="flex column full-width" square>
+                        <Paper className="flex column full-width" style={{ borderRadius: '12px', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)' }}>
                             <List>
-                                <ListItem component={MuiLink} href={`mailto:info@${Config.GLOBAL_SITE_DOMAIN}`}>
+                                <ListItem component={MuiLink} href={`mailto:info@${Config.GLOBAL_SITE_DOMAIN}`} style={{ padding: '16px' }}>
                                     <ListItemText primary={SETTINGS_HELP_SUPPORT_BUSINESS_REQUEST} />
                                 </ListItem>
-                                <ListItem button component={Link} to={SUPPORT_PATH}>
+                                <ListItem button component={Link} to={SUPPORT_PATH} style={{ padding: '16px' }}>
                                     <ListItemText primary={SETTINGS_HELP_SUPPORT_CONTACT} />
                                 </ListItem>
                             </List>
                         </Paper>
                     </div>
                     <div className="full-width">
-                        <Typography className="spacing margin double top bottom" variant="h6">
+                        <Typography
+                            className="spacing  double top bottom"
+                            variant="h6"
+                            style={{ fontWeight: 600, color: '#ed6c02', marginTop: '20px', marginBottom: '10px' }}
+                        >
                             {SETTINGS_LAW}
                         </Typography>
-                        <Paper className="full-width" square>
+                        <Paper className="full-width" style={{ borderRadius: '12px', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)' }}>
                             <List>
-                                <ListItem button component={Link} to={IMPRESSUM_PATH}>
+                                <ListItem button component={Link} to={IMPRESSUM_PATH} style={{ padding: '16px' }}>
                                     <ListItemText primary={SETTINGS_IMPRINT} />
                                 </ListItem>
-                                <ListItem button component={Link} to={DATA_PROTECTION_POLICY_PATH}>
+                                <ListItem button component={Link} to={DATA_PROTECTION_POLICY_PATH} style={{ padding: '16px' }}>
                                     <ListItemText primary={SETTINGS_DATASAFETY} />
                                 </ListItem>
-                                <ListItem button component={Link} to={AGB_PATH}>
+                                <ListItem button component={Link} to={AGB_PATH} style={{ padding: '16px' }}>
                                     <ListItemText primary={SETTINGS_AGB} />
                                 </ListItem>
                             </List>
                         </Paper>
                     </div>
                 </div>
-                <div className={isSmallScreen ? 'flex column no-grow' : 'flex no-grow'} style={{marginTop:'16px'}}>
-                            <Paper className="full-width spacing margin triple right" square>
-                                    <List>
-                                        <ListItem button onClick={() => setChangeLocationDialogOpen(true)}>
-                                            <ListItemIcon>
-                                                <Icon icon={faLocation} />
-                                            </ListItemIcon>
-                                            <ListItemText primary={CHANGE_LOCATION_TITLE} />
-                                            <ListItemSecondaryAction>
-                                                <Icon icon={faChevronRight} />
-                                            </ListItemSecondaryAction>
-                                        </ListItem>
-                                    </List>
-                            </Paper> 
-                            {isSmallScreen && <div className="spacing margin double bottom" />}
-                            <Paper className="full-width" square>
-                                <List>
-                                    <ListItem button onClick={() => setContactFormOpen(true)}>
-                                        <ListItemIcon>
-                                            <Icon icon={faEnvelope} />
-                                        </ListItemIcon>
-                                        <ListItemText primary={SETTINGS_CONTACT_FORM} />
-                                        <ListItemSecondaryAction>
-                                            <Icon icon={faChevronRight} />
-                                        </ListItemSecondaryAction>
-                                    </ListItem>
-                                </List>
-                            </Paper>                                                   
-                        </div>               
+                <div className={isSmallScreen ? 'flex column no-grow' : 'flex no-grow'} style={{ marginTop: '16px' }}>
+                    <Paper
+                        className="full-width spacing margin triple right"
+                        style={{ borderRadius: '12px', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)' }}
+                    >
+                        <List>
+                            <ListItem button onClick={() => setChangeLocationDialogOpen(true)} style={{ padding: '16px' }}>
+                                <ListItemIcon>
+                                    <Icon icon={faLocation} style={{ color: '#ed6c02' }} />
+                                </ListItemIcon>
+                                <ListItemText primary={CHANGE_LOCATION_TITLE} />
+                                <ListItemSecondaryAction>
+                                    <Icon icon={faChevronRight} style={{ color: '#ed6c02' }} />
+                                </ListItemSecondaryAction>
+                            </ListItem>
+                        </List>
+                    </Paper>
+                    {isSmallScreen && <div className="spacing margin double bottom" />}
+                    <Paper className="full-width" style={{ borderRadius: '12px', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)' }}>
+                        <List>
+                            <ListItem button onClick={() => setContactFormOpen(true)} style={{ padding: '16px' }}>
+                                <ListItemIcon>
+                                    <Icon icon={faEnvelope} style={{ color: '#ed6c02' }} />
+                                </ListItemIcon>
+                                <ListItemText primary={SETTINGS_CONTACT_FORM} />
+                                <ListItemSecondaryAction>
+                                    <Icon icon={faChevronRight} style={{ color: '#ed6c02' }} />
+                                </ListItemSecondaryAction>
+                            </ListItem>
+                        </List>
+                    </Paper>
                 </div>
+            </div>
             <div className="flex no-grow justify-content-center align-items-center column spacing margin triple bottom top">
-
-                <Button onClick={() => setOpenDeleteAccountDialog(true)} variant="text" style={{ color: '#FE0000' }}>
+                <Button
+                    onClick={() => setOpenDeleteAccountDialog(true)}
+                    variant="outlined"
+                    style={{ color: '#FE0000', fontWeight: 600, textTransform: 'none' }}
+                >
                     {DELETE_ACCOUNT_TITLE}
                 </Button>
             </div>
@@ -254,9 +286,10 @@ export const SettingsPage = (props: ISettingsPageProps) => {
             <BonusCodeDialog open={openBonusCodeDialog} onClose={() => setOpenBonusCodeDialog(false)} />
             <ChangeLocationDialog isOpen={changeLocationDialogOpen} onClose={() => setChangeLocationDialogOpen(false)} />
             <ContactForm isOpen={contactFormOpen} onClose={() => setContactFormOpen(false)} />
-            <ForgotPasswordModal open={openForgotPassword}  />
+            <ForgotPasswordModal open={openForgotPassword} />
         </div>
     );
 };
 
 export default SettingsPage;
+

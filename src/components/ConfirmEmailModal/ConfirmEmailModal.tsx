@@ -56,8 +56,6 @@ export const ConfirmEmailModal = (props: IConfirmEmailModalProps) => {
         }
     }, [user?.Verifiy]);
 
-console.log(user?.Verifiy);
-console.log(user?.PartnerDoi);
     return (
         <IconModal
             open={user?.Verifiy=== 0 && user?.PartnerDoi === 1 ? true:false}

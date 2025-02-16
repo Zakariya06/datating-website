@@ -26,18 +26,18 @@ export const NewsFeedUserStats = memo(() => {
                  ) : (
                     <Typography className="spacing margin double bottom text-align-center" variant="overline">
                         {NEWSFEED_VERIFY}
-                    </Typography>                    
+                    </Typography>
                 )}
 
                 <NewsFeedUserStatItem
                     text={NEWSFEED_PROFILE_PICUTRE}
-                    value={hasProfileImage}
+                    value={Number(hasProfileImage)}
                     button
                     onClick={() => setOpenUploadProfilePicture(true)}
                 />
                 <NewsFeedUserStatItem
                     text={NEWSFEED_EMAIL_VERIFICATION}
-                    value={Boolean(user?.Verifiy)}
+                    value={Number(user?.Verifiy)}
                     button
                     onClick={() => setOpenConfirmEmailDialog(true)}
                 />

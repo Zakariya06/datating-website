@@ -10,9 +10,17 @@ export function ChatUnreadDot({ unread }: IChatUnreadDotProps) {
     return (
         <Avatar
             variant="circular"
-            style={{ width: 20, height: 20, fontSize: '0.7rem', backgroundColor: Config.GLOBAL_PRIMARY_COLOR, color: '#fff', bottom: 10 }}
+            style={{
+                width: 20,
+                height: 20,
+                fontSize: '0.7rem',
+                backgroundColor: Config.GLOBAL_PRIMARY_COLOR,
+                color: '#fff',
+
+                left: 40,
+                position: 'absolute',
+            }}
             color="error"
-            className="spacing margin left"
         >
             {unread}
         </Avatar>
@@ -20,3 +28,4 @@ export function ChatUnreadDot({ unread }: IChatUnreadDotProps) {
 }
 
 export default ChatUnreadDot;
+

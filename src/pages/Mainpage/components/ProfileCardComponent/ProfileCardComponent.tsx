@@ -1,8 +1,8 @@
 import './ProfileCardComponent.scss';
 
 import { faEye, faHeart, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
-import { Paper, Typography, useMediaQuery } from '@material-ui/core';
-import React, { memo, useCallback, useState } from 'react';
+import { Paper, styled, Typography, useMediaQuery } from '@material-ui/core';
+import React, { memo, useCallback, useContext, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
@@ -22,6 +22,7 @@ import { ProfileCardActions } from './ProfileCardActions';
 import { faLocation } from '@fortawesome/pro-solid-svg-icons';
 import { faLocationArrow } from '@fortawesome/pro-light-svg-icons';
 import { Circle } from '@mui/icons-material';
+import ThemeContext from 'theme/ThemeContext';
 
 export interface IProfileCardComponentProps {
     type: 'explorer' | 'like' | 'visitor';
@@ -32,6 +33,76 @@ export interface IProfileCardComponentProps {
     className?: string;
 }
 
+// Add these styled components at the top of your file
+const StyledPaper = styled(Paper)({
+    maxWidth: '100%',
+    margin: 'auto',
+    borderRadius: 16,
+    border: '1px solid #E8C285',
+    background: 'white',
+    boxShadow: 'none',
+    overflow: 'hidden',
+    position: 'relative',
+    transition: 'transform 0.3s ease',
+    '&:hover': {
+        transform: 'scale(1.02)',
+    },
+});
+
+const ImageContainer = styled('div')({
+    position: 'relative',
+    width: '100%',
+    height: 280,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+    overflow: 'hidden', // Add this to contain the zoomed image
+});
+
+const ContentContainer = styled('div')({
+    padding: '16px',
+    background: 'white',
+});
+
+const ActionButton = styled('div')({
+    width: 40,
+    height: 40,
+    borderRadius: '50%',
+    border: '2px solid #E8C285',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: '#E8C285',
+    cursor: 'pointer',
+    '&:hover': {
+        backgroundColor: 'rgba(232, 194, 133, 0.1)',
+    },
+});
+
+const NewChip = styled('div')({
+    position: 'absolute',
+    top: 12,
+    left: 12,
+    backgroundColor: '#E8C285',
+    color: 'white',
+    padding: '4px 8px',
+    borderRadius: 12,
+    fontSize: '0.75rem',
+    fontWeight: 'bold',
+});
+
+const ImageWrapper = styled('div')({
+    width: '100%',
+    height: '100%',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    transition: 'transform 0.5s ease',
+    '&:hover': {
+        transform: 'scale(1.1)',
+    },
+});
+
 export const ProfileCardComponent = memo((props: IProfileCardComponentProps) => {
     const { type, strangerUser, newTag = false, user, token, className = '' } = props;
     const [openUnlockProfile, setOpenUnlockProfile] = useState<boolean>(false);
@@ -39,7 +110,7 @@ export const ProfileCardComponent = memo((props: IProfileCardComponentProps) => 
     const dispatch = useDispatch();
     const { DISCOVER, LOCATION_FROM } = useTranslation();
     const { Unlocked = true, Profilid, Username, Birthday, City, ProfilPicture, Picture, Verified, IsOnline } = strangerUser;
-
+    const { type: theme } = useContext(ThemeContext);
     const handleProfileClick = useCallback(() => {
         if (Unlocked) {
             history.push(STRANGER_PROFILE_PATH.replace(':id?', Profilid), { profileId: Profilid });
@@ -87,93 +158,72 @@ export const ProfileCardComponent = memo((props: IProfileCardComponentProps) => 
     const verified = Verified === 1 ? <Icon icon={faCheckCircle} style={{ color: '#42A5F5' }} /> : '';
 
     return (
-        <Paper
-            style={{
-                backgroundImage: `url(${generateValidUrl(getProfileImage(strangerUser))})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
-                marginBottom: '10px',
-                padding: type === 'like' ? '.5em 0' : '',
-            }}
-            id={`item-${Username}`}
-            className={` no-grow pointer ${className} spacing padding bottom`}
-        >
-            <div onClick={handleProfileClick}>
-                {newTag && <NewTag />}
-                {type !== 'like' && (
-                    <ProgressiveImage style={{ height: cardimageheight }} src={generateValidUrl(getProfileImage(strangerUser))}>
-                        {!Unlocked && (
-                            <div className="flex column centered full-height" onClick={() => setOpenUnlockProfile(true)}>
-                                <Typography color="textPrimary" style={{ color: '#fff', fontWeight: 700 }}>
-                                    {DISCOVER}
-                                </Typography>
-                            </div>
-                        )}
-                    </ProgressiveImage>
-                )}
-
-                <div className={`flex ${type === 'explorer' ? 'column' : 'row'} align-items-center`}>
-                    <div className="flex column spacing padding all full-width">
-                        <div className={Unlocked ? '' : 'blur'} style={{ fontSize: type==='like'? 10 : 16, fontWeight: 600 }}>
-                            <Typography
-                                color={!Unlocked ? 'inherit' : undefined}
-                                style={{ color: '#fff', fontWeight:type==='like'? 600: 900 }}
-                                className="ellipsis"
-                                variant="overline"
-                            >
-                                {Username} {verified}                                 
-                                {IsOnline ? (
-                                    <Circle sx={{ color: '#19cea4', fontSize: '.7em', marginLeft: 0.5 }} />
-                                ) : (
-                                    <Circle sx={{ color: 'red', fontSize: '.7em', marginLeft: 0.5 }} />
-                                )}
+        <StyledPaper id={`item-${Username}`} className={className} onClick={handleProfileClick}>
+            <ImageContainer>
+                <ImageWrapper
+                    style={{
+                        backgroundImage: `url(${generateValidUrl(getProfileImage(strangerUser))})`,
+                    }}
+                >
+                    {newTag && <NewChip>NEU</NewChip>}
+                    {!Unlocked && (
+                        <div className="flex column centered full-height">
+                            <Typography color="textPrimary" style={{ color: '#fff', fontWeight: 700 }}>
+                                {DISCOVER}
                             </Typography>
                         </div>
-                        
-
-                        {type === 'explorer' ? (
-                            <Typography style={{ color: '#fff', fontWeight: 300 }} className="ellipsis">
-                                <Icon style={{ fontSize: '0.9rem' }} icon={faLocationArrow} /> {City}
-                                <br></br>
-                                <b style={{ fontSize: '1.5rem', float: 'right', fontWeight: 900 }}>{getAge(Birthday)}</b>
-                            </Typography>
-                        ) : (
-                            <Typography className="flex no-grow align-items-center">
-                                {icon} {strangerUser.Date && formatRelativeTimeToNow(strangerUser.Date)}
-                            </Typography>
-                        )}
-                      
-                    </div>
-                    {type === 'like' && (
-                            <div onClick={() => setOpenUnlockProfile(true)}>
-                                <Typography color="textPrimary" style={{ color: '#fff', fontWeight: 500 }}>
-                                    {Unlocked ? null : DISCOVER}
-                                </Typography>
-                            </div>
                     )}
-                 {
-                        <div className="flex no-grow spacing margin right left" onClick={(e) => e.stopPropagation()}>
-                        <ProfileCardActions
-                            type={type}
-                            handleMessagePress={handleMessagePress}
-                            strangerUser={strangerUser}
-                            token={token}
-                            user={user}
-                            Unlocked={Unlocked}
-                            ProfilPicture={ProfilPicture}
-                            Picture={Picture}
-                            handleShopClick={handleShopClick}
-                            handleUnlockProfile={handleUnlockProfile}
-                            openUnlockProfile={openUnlockProfile}
-                            setOpenUnlockProfile={setOpenUnlockProfile}
-                        />
-                    </div>
-                 }
+                </ImageWrapper>
+            </ImageContainer>
+
+            <ContentContainer>
+                <div className={`flex column ${Unlocked ? '' : 'blur'}`}>
+                    <Typography
+                        variant="h6"
+                        style={{
+                            fontSize: '1rem',
+                            fontWeight: 600,
+                            marginBottom: 4,
+                            color: '#2c2c2c',
+                        }}
+                    >
+                        {Username} {verified}
+                        {IsOnline && <Circle sx={{ color: '#19cea4', fontSize: '.7em', marginLeft: 0.5 }} />}
+                    </Typography>
+
+                    <Typography
+                        variant="body2"
+                        style={{
+                            color: 'rgba(0, 0, 0, 0.6)',
+                            fontSize: '0.875rem',
+                            textTransform: 'uppercase',
+                            marginBottom: 16,
+                        }}
+                    >
+                        {City}
+                    </Typography>
                 </div>
-            </div>
-        </Paper>
+
+                <div className="flex justify-center gap-3 mt-2">
+                    <ProfileCardActions
+                        type={type}
+                        handleMessagePress={handleMessagePress}
+                        strangerUser={strangerUser}
+                        token={token}
+                        user={user}
+                        Unlocked={Unlocked}
+                        ProfilPicture={ProfilPicture}
+                        Picture={Picture}
+                        handleShopClick={handleShopClick}
+                        handleUnlockProfile={handleUnlockProfile}
+                        openUnlockProfile={openUnlockProfile}
+                        setOpenUnlockProfile={setOpenUnlockProfile}
+                    />
+                </div>
+            </ContentContainer>
+        </StyledPaper>
     );
 });
 
 export default ProfileCardComponent;
+

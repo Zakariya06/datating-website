@@ -69,7 +69,7 @@ export const MessagesPage = (props: IMessagesPageProps) => {
     return (
         <div className="flex messageSection" style={{ padding: isDesktop ? 24 : 0 }}>
             {isDesktop ? (
-                <Paper className="flex row" style={{ maxHeight: '100vh', borderRadius: 50, backgroundColor: type === 'light' ? '#f0f0f0' : '' }}>
+                <Paper className="flex row" style={{ maxHeight: '100vh', backgroundColor: type === 'light' ? 'white' : 'black' }}>
                     <ChatOverview
                         stars={stars}
                         openPurchaseStarsDialog={handleOpenPurchaseStarDialog}
@@ -79,7 +79,6 @@ export const MessagesPage = (props: IMessagesPageProps) => {
                     />
                     <Divider flexItem orientation="vertical" />
                     {selectedDialog && <ChatInterface openDrawer={() => setOpenDrawer(true)} key={selectedDialog.uuid} dialog={selectedDialog} />}
-
                     {!selectedDialog && chats.length === 0 && (
                         <EmptyState image={emptyStateImage} imageStyles={{ height: 250 }} title={CHAT_EMPTYSTATE} />
                     )}
@@ -109,3 +108,4 @@ export const MessagesPage = (props: IMessagesPageProps) => {
 };
 
 export default MessagesPage;
+
