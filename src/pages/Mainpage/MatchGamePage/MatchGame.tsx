@@ -50,7 +50,7 @@ const MatchGame = () => {
                     setActiveStep((prevActiveStep) => prevActiveStep + 1);
                 }
             })
-            .catch((error) => {});
+            .catch((error) => { });
     };
 
     const handleNext = () => {
@@ -69,18 +69,25 @@ const MatchGame = () => {
         <Box
             p={{ md: 4, sm: 3, xs: 2 }}
             mt={{ xs: 5, sm: 0, md: 0 }}
-            height={{ md: 'auto', sm: 'auto', xs: '100vh' }}
+            height={{ md: 'auto', sm: 'auto', }}
             sx={{ backgroundColor: '#f5f5f5', borderRadius: 3 }}
         >
             {items?.length > 0 &&
                 items?.map((item, i) => (
-                    <Grid container spacing={{ md: 4, sm: 3, xs: 2 }} alignItems="center" key={i}>
+                    <Grid container spacing={{ md: 4, sm: 3, xs: 2 }} alignItems="center" key={i} position={"relative"}>
                         {activeStep === i && (
-                            <Grid item md={6} sm={7} xs={12}>
+                            <Grid item md={6} sm={7} xs={12} >
                                 <Box
-                                    height={{ md: '550px', sm: '450px', xs: '500px' }}
+                                    height={{ md: '550px', sm: '450px', xs: '450px' }}
                                     position={'relative'}
-                                    sx={{ borderRadius: 3, overflow: 'hidden', boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.1)' }}
+                                    sx={{
+                                        borderRadius: 3, overflow: 'hidden', boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.1)',
+                                        '&:hover': {
+                                            '& > div': {
+                                                width: '100%',
+                                            },
+                                        },
+                                    }}
                                 >
                                     <Link to={STRANGER_PROFILE_PATH.replace(':id?', item?.Profilid)}>
                                         <img
@@ -113,13 +120,19 @@ const MatchGame = () => {
                                         </Button>
                                     )}
                                     <Box
+
                                         sx={{
                                             position: 'absolute',
-                                            bottom: { md: 90, sm: 80, xs: 20 },
+                                            zIndex: 444,
+                                            top: '50%',
                                             left: '50%',
-                                            transform: 'translateX(-50%)',
+                                            transform: 'translate(-50%, -50%)',
                                             display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'space-between',
                                             gap: 2,
+                                            width: '150%',
+                                            transition: "all 0.3s ease",
                                         }}
                                     >
                                         <Button
@@ -127,19 +140,19 @@ const MatchGame = () => {
                                             sx={{
                                                 borderRadius: '50%',
                                                 p: 2,
-                                                backgroundColor: '#00000090',
+                                                backgroundColor: '#fff',
                                                 '&:hover': { backgroundColor: '#000000b0' },
                                             }}
                                             onClick={handleBack}
                                         >
-                                            <Close sx={{ color: 'white', fontSize: 30 }} />
+                                            <Close sx={{ color: 'gray', fontSize: 30 }} />
                                         </Button>
                                         <Button
                                             variant="contained"
                                             sx={{
                                                 borderRadius: '50%',
                                                 p: 2,
-                                                backgroundColor: '#00000090',
+                                                backgroundColor: '#fff',
                                                 '&:hover': { backgroundColor: '#000000b0' },
                                             }}
                                             onClick={handleNext}
@@ -151,7 +164,21 @@ const MatchGame = () => {
                                 </Box>
                             </Grid>
                         )}
-                        <Grid item md={6} sm={5} xs={12}>
+                        <Grid
+                            item
+                            md={6}
+                            sm={5}
+                            xs={12} 
+                            sx={{
+                                position: { sm: "static", xs: "absolute", md: "static" }, // Absolute for small, static for large
+                                top: { sm: "unset", xs: "90%", md: "unset" }, // Reset bottom for larger screens
+                                left: { sm: "unset", xs: "50%", md: "unset" }, // Reset left for larger screens
+                                transform: { sm: "unset", xs: "translate(-50%, -20%)", md: "unset" }, // Reset transform
+                                width: { xs: "96%", sm: "100%", md: "auto" }, // Reset width
+                                height: { xs: "100%", sm: "100%", md: "auto" }, // Reset height
+                                 
+                            }}
+                        >
                             {activeStep === i && (
                                 <Box
                                     sx={{
