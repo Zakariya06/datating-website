@@ -98,7 +98,7 @@ export const UserCardGrid = memo((props: IUserCardGridProps) => {
 
     return (
         <section
-            className=" "
+            className="exploreCardSection "
             style={{
                 padding: viewType === 'visitor' ? '0 .7em ' : '',
                 height: viewType === 'visitor' ? 700 : '',

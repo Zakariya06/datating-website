@@ -31,9 +31,9 @@
     flex: 1 1 calc(50% - 16px);
   }
 }
-@media (max-width: 399px) {
+@media (max-width: 400px) {
   .user-card-grid-root .user-card-grid-item {
     max-width: calc(100% - 16px);
-    flex: 1 1 calc(100% - 16px);
+    flex: 1 1 calc(100% - 16px);        
   }
 }/*# sourceMappingURL=UserCardGrid.css.map */

@@ -158,34 +158,35 @@ export const ProfileCardComponent = memo((props: IProfileCardComponentProps) => 
     const verified = Verified === 1 ? <Icon icon={faCheckCircle} style={{ color: '#42A5F5' }} /> : '';
 
     return (
-        <StyledPaper id={`item-${Username}`} className={className} onClick={handleProfileClick}>
-            <ImageContainer>
+        <StyledPaper id={`item-${Username}`} className={className} onClick={handleProfileClick} >
+            <ImageContainer className='cardImageContainer'>
                 <ImageWrapper
                     style={{
-                        backgroundImage: `url(${generateValidUrl(getProfileImage(strangerUser))})`,
+                        backgroundImage: `url(${generateValidUrl(getProfileImage(strangerUser))})`, 
                     }}
+                    className='exploreImageWrrper'
                 >
                     {newTag && <NewChip>NEU</NewChip>}
                     {!Unlocked && (
                         <div className="flex column centered full-height">
                             <Typography color="textPrimary" style={{ color: '#fff', fontWeight: 700 }}>
-                                {DISCOVER}
+                                {DISCOVER} 
                             </Typography>
                         </div>
                     )}
                 </ImageWrapper>
             </ImageContainer>
 
-            <ContentContainer>
-                <div className={`flex column ${Unlocked ? '' : 'blur'}`}>
+            <ContentContainer  className='cardContentContainer' >
+                <div className={`flex column ${Unlocked ? '' : 'blur'} `}>
                     <Typography
                         variant="h6"
                         style={{
                             fontSize: '1rem',
-                            fontWeight: 600,
-                            marginBottom: 4,
+                            fontWeight: 600, 
                             color: '#2c2c2c',
                         }}
+                        className='cardTitleHeading'
                     >
                         {Username} {verified}
                         {IsOnline && <Circle sx={{ color: '#19cea4', fontSize: '.7em', marginLeft: 0.5 }} />}
@@ -193,18 +194,18 @@ export const ProfileCardComponent = memo((props: IProfileCardComponentProps) => 
 
                     <Typography
                         variant="body2"
+                        className='cityText'
                         style={{
                             color: 'rgba(0, 0, 0, 0.6)',
                             fontSize: '0.875rem',
-                            textTransform: 'uppercase',
-                            marginBottom: 16,
+                            textTransform: 'uppercase', 
                         }}
                     >
-                        {City}
+                        {City}  
                     </Typography>
                 </div>
 
-                <div className="flex justify-center gap-3 mt-2">
+                <div className="flex justify-center gap-3 mt-2 socialIcon">
                     <ProfileCardActions
                         type={type}
                         handleMessagePress={handleMessagePress}

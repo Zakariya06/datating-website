@@ -9,4 +9,35 @@
     background: linear-gradient(90deg, #3a6aff 0%, #ab5d9a 100%);
     color: #fff;
     border-radius: 0 0 8px 0;
+} 
+.cityText{
+    margin-bottom: 1rem;
+}
+.cardTitleHeading{
+    margin-bottom: 1rem;
+}
+
+@media screen and (max-width: 768px) {
+    .socialIcon {
+        display: none;
+    }
+    .cardContentContainer{
+        padding: 0.2rem 0.6rem; 
+    }
+    .cityText{
+        margin-bottom: 0;
+    }
+    .cardTitleHeading{
+        margin-bottom: 0rem;
+    }
+    .cardImageContainer{
+        height: 200px;
+    }
+    .exploreCardSection::-webkit-scrollbar{
+        width: 10px;
+    }
+    .exploreCardSection::-webkit-scrollbar-thumb{
+        border-radius: 20px;
+        background: #ccc;
+    }
 }
