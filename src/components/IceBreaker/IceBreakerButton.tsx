@@ -41,9 +41,9 @@ const useStyles = makeStyles(() => ({
 }));
 
 export interface IIceBreakerButtonProps {
-    strangerUser: IStrangerUser;
-    user? : IUser;
-    token?: string;
+    strangerUser: IStrangerUser | any;
+    user? : IUser | any;
+    token?: string | any;
 }
 
 export const IceBreakerButton = (props: IIceBreakerButtonProps) => {

@@ -1,4 +1,4 @@
-import { Link, Typography } from '@material-ui/core';
+import { Link, Typography, useMediaQuery } from '@material-ui/core';
 import { memo, useState } from 'react';
 
 import Config from '../../../../config';
@@ -23,6 +23,8 @@ export const ChatMessage = memo((props: IChatMessageComponentProps) => {
     const isImage = message ? isImageCheck(message) : false;
     const isVideo = message ? isValidVideoURL(message) : false;
     const [openDialog, setOpenDialog] = useState<boolean>(false);
+        const isMobile = useMediaQuery('(max-width:430px)', { defaultMatches: true });
+    
 
     if (type === ChatMessageTypes.ZWINKER) {
         const text = ResourceService.replace(isSender ? CHAT_SENT_A_BLINK : CHAT_GOT_A_BLINK, { name: chatPartnerName });
@@ -47,7 +49,7 @@ export const ChatMessage = memo((props: IChatMessageComponentProps) => {
 
     return (
         <>
-            <div style={{ backgroundColor: isSender ? Config.GLOBAL_PRIMARY_COLOR : undefined }} className={`chat-message ${isSender ? 'sender' : 'stranger'} ${isDark ? 'dark' : ''}`}>
+            <div style={{ backgroundColor: isSender ? 'lightGray' : undefined }} className={`chat-message ${isSender ? 'sender' : 'stranger'} ${isDark ? 'dark' : ''}`}>
                 {isLink && message ? (
                     <Link onClick={() => setOpenDialog(true)} color="inherit" className="pointer chat-message-text">
                         {message}
@@ -60,15 +62,17 @@ export const ChatMessage = memo((props: IChatMessageComponentProps) => {
                         Your browser does not support the video tag.
                     </video>
                 ) : (
-                    <Typography color="inherit" className="chat-message-text">
+                    <Typography style={{color:isMobile ? 'black' : 'inherit'}}className="chat-message-text">
                         {message}
                     </Typography>
                 )}
 
                 <div className="text-align-right">
-                    <Typography variant="caption" color="inherit" className="chat-message-date">
+                    {
+                        isMobile ? null : <Typography variant="caption" color="inherit" className="chat-message-date">
                         {formatDate(datetime, DateFormats.TIME)}
                     </Typography>
+                    }
                 </div>
             </div>
             {isLink && <WarnExternalLinkDialog onClose={() => setOpenDialog(false)} link={message} open={openDialog} />}

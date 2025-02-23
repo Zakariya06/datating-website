@@ -48,7 +48,7 @@ export const ExplorerPage = memo((props: IExplorerPageProps) => {
         <>
             <div className="user-card-grid-root">
                 <ListItem button onClick={handleOpen} selected={Boolean(open)} style={{ textAlign: 'center' }} disableRipple>
-                    <ListItemText primary={MENU_SEARCHSETTINGS} />
+                    {/* <ListItemText primary={MENU_SEARCHSETTINGS} /> */}
                 </ListItem>
                 <SearchPopover anchorEl={anchorEl} open={open} closePopper={handleClose} />
                 <UserCardGrid items={users._embedded.items} viewType="explorer" onScrolledToBottom={handleScrolledToBottom} isLoading={isLoading} />

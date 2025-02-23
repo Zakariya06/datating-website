@@ -1,5 +1,6 @@
 import React, { memo, useMemo } from 'react';
-import { Avatar, Box, Divider, ListItem, ListItemAvatar, Typography } from '@material-ui/core';
+import { Box } from '@mui/material';
+import {Divider, ListItem, ListItemAvatar, Typography, useMediaQuery } from '@material-ui/core';
 import { Circle } from '@mui/icons-material';
 import generateValidUrl from '../../../../../core/fetch/generateValidUrl';
 import limitString from '../../../../../core/limitString';
@@ -18,7 +19,7 @@ export interface IChatListItemComponentProps {
     onChatClick(dialog: IDialog): void;
 }
 
-const avatarStyle = { height: 60, width: 60, overflow: 'visible' };
+// const avatarStyle = { height: 60, width: 60, borderRadius: 50, objectFit: 'cover' };
 
 const calculateDaysSince = (date: any) => {
     const currentDate: any = new Date();
@@ -37,6 +38,7 @@ export const ChatListItemComponent = memo((props: IChatListItemComponentProps) =
     const handleChatClick = () => onChatClick(dialog);
 
     const isSender = lastMessage?.sender !== id;
+    const isMobile = useMediaQuery('(max-width:430px)', { defaultMatches: true });
 
     const textToRender = useMemo(() => {
         switch (lastMessage?.type) {
@@ -65,7 +67,7 @@ export const ChatListItemComponent = memo((props: IChatListItemComponentProps) =
         name,
     ]);
 
-    const imgsrc = useMemo(() => generateValidUrl(photo), [photo]);
+    const imgsrc:any = useMemo(() => generateValidUrl(photo), [photo]);
 
     const daysSinceLastMessage = useMemo(() => calculateDaysSince(lastMessage?.datetime), [lastMessage?.datetime]);
 
@@ -77,11 +79,22 @@ export const ChatListItemComponent = memo((props: IChatListItemComponentProps) =
                 onClick={handleChatClick}
                 selected={selected}
                 component="li"
-                style={{ ...style, height: style?.maxHeight ?? 112}}
+                style={{ ...style, height: style?.maxHeight ?? 112 }}
             >
-                <ListItemAvatar>
-                    <ChatListItemImage imgsrc={imgsrc} />
-                </ListItemAvatar>
+                {/* <ListItemAvatar> */}
+                {/* <ChatListItemImage imgsrc={imgsrc} /> */}
+                <Box 
+                component={'img'}
+                 sx={{
+                    width:70,
+                    height:60,
+                    borderRadius:50,
+                    objectFit:'cover'
+                 }}
+                 src={imgsrc}
+
+                 />
+                {/* </ListItemAvatar> */}
 
                 <div className="flex column spacing margin left">
                     <div className="flex row justify-content-space-between align-items-center spacing margin bottom">
@@ -98,19 +111,21 @@ export const ChatListItemComponent = memo((props: IChatListItemComponentProps) =
                         </Typography>
                         {!isSender && id != 'support' && (
                             <Box flexGrow={1} textAlign={'right'}>
-                                <Button
-                                    style={{
-                                        backgroundColor: '#19cea4',
-                                        color: 'black',
-                                        padding: '.4em .6em',
-                                        fontSize: '.8em',
-                                        fontWeight: 600,
-                                        borderRadius: '50px',
-                                    }}
-                                    disableRipple
-                                >
-                                    {ResourceService.getCurrentResources().CHAT_YOURTURN}
-                                </Button>
+                                {isMobile ? null : (
+                                    <Button
+                                        style={{
+                                            backgroundColor: '#19cea4',
+                                            color: 'black',
+                                            padding: '.4em .6em',
+                                            fontSize: '.8em',
+                                            fontWeight: 600,
+                                            borderRadius: '50px',
+                                        }}
+                                        disableRipple
+                                    >
+                                        {ResourceService.getCurrentResources().CHAT_YOURTURN}
+                                    </Button>
+                                )}
                             </Box>
                         )}
                     </div>
@@ -118,7 +133,7 @@ export const ChatListItemComponent = memo((props: IChatListItemComponentProps) =
                         <Typography
                             variant="body2"
                             style={{
-                                width: 0,
+                                width: '100%',
                                 flex: 1,
                                 textOverflow: 'ellipsis',
                                 overflow: 'hidden',
@@ -132,16 +147,19 @@ export const ChatListItemComponent = memo((props: IChatListItemComponentProps) =
                         {unread > 0 && <ChatUnreadDot unread={unread} />}
                     </div>
                     <div className="flex row">
-                        {id != 'support' && (
-                            <Typography variant="caption" style={{ color: 'red' }}>
-                                {7 - daysSinceLastMessage >= 0
-                                    ? ResourceService.replace(ResourceService.getCurrentResources().CHAT_EXPIRE, {
-                                          days: (7 - daysSinceLastMessage).toString(),
-                                      })
-                                    : ResourceService.getCurrentResources().CHAT_EXPIRED}
-                            </Typography>
+                        {id != 'support' &&
+                            (isMobile ? null : (
+                                <Typography variant="caption" style={{ color: 'red' }}>
+                                    {7 - daysSinceLastMessage >= 0
+                                        ? ResourceService.replace(ResourceService.getCurrentResources().CHAT_EXPIRE, {
+                                              days: (7 - daysSinceLastMessage).toString(),
+                                          })
+                                        : ResourceService.getCurrentResources().CHAT_EXPIRED}
+                                </Typography>
+                            ))}
+                        {isMobile ? null : (
+                            <Typography variant="caption">{lastMessage?.datetime ? getDateString(lastMessage.datetime) : ''}</Typography>
                         )}
-                        <Typography variant="caption">{lastMessage?.datetime ? getDateString(lastMessage.datetime) : ''}</Typography>
                     </div>
                 </div>
             </ListItem>
@@ -157,7 +175,7 @@ export const ChatListItemComponent = memo((props: IChatListItemComponentProps) =
 
 export default ChatListItemComponent;
 
-const ChatListItemImage = memo(({ imgsrc }: { imgsrc: string }) => {
-    return <Avatar src={imgsrc} style={avatarStyle} />;
-});
+// const ChatListItemImage = memo(({ imgsrc }: { imgsrc: string }) => {
+//     return <Avatar src={imgsrc} style={avatarStyle} />;
+// });
 

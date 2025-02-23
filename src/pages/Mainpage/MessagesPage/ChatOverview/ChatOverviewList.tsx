@@ -72,7 +72,7 @@ export const ChatOverviewList = memo((props: IChatOverviewListProps) => {
                     {({ index, data, style }) => {
                         const chat = data[index];
                         return (
-                            <div style={{ ...style, background: type === 'light' ? 'white' : 'black' }} key={chat.uuid}>
+                            <div style={{ ...style, background: type === 'light' ? 'white' : 'black',}} key={chat.uuid}>
                                 <ChatListItem dialog={chat} onChatClick={onChatClick} selected={chat.uuid === selectedDialogId} />
                                 {chat.offen == '-1' && chat.uuid != 'support' ? (
                                     <Box

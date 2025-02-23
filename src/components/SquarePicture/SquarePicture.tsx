@@ -21,6 +21,7 @@ export const SquarePicture = (props: ISquarePictureProps) => {
     const handleClickDiv = (e: React.MouseEvent) => onClick(index);
     const isDesktop = useMediaQuery('(min-width:900px)', { defaultMatches: true });
     const isTablet = useMediaQuery('(min-width:768px)', { defaultMatches: true });
+    const isMobile = useMediaQuery('(max-width:430px)', { defaultMatches: true });
 
     // const paperStyle: CSSProperties = {
     //     minWidth: isDesktop ? '100px' : '40vw',
@@ -30,8 +31,8 @@ export const SquarePicture = (props: ISquarePictureProps) => {
 
     return (
         <Paper className="square-picture spacing margin all" onClick={handleClickDiv} style={{
-            width:isDesktop ? '125px' : isTablet ? '150px' :'100%',
-            height:'130px'
+            width:isDesktop ? '125px' : isTablet ? '150px' : isMobile ? '90px' : '100%',
+            height: isMobile ? '100px':'130px'
         }} square={false} elevation={3}>
             <Image src={generateValidUrl(src)} backgroundSize="cover" style={{
                 width:'100%'

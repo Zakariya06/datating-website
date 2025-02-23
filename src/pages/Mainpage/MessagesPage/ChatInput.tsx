@@ -1,6 +1,6 @@
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
-import { faGift, faCamera } from '@fortawesome/pro-light-svg-icons';
-import { IconButton, InputAdornment, TextField, Typography } from '@material-ui/core';
+import { faGift, faCamera, faFont, faFontCase, faGifts } from '@fortawesome/pro-light-svg-icons';
+import { IconButton, InputAdornment, TextField, Typography, styled } from '@material-ui/core';
 import React, { memo, useCallback, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -14,6 +14,9 @@ import useTranslation from '../../../services/i18n/core/useTranslation';
 import ChatGiftComponent from './ChatGiftComponent';
 import { ChatMessageTypes } from 'models/chat/ChatMessageType';
 import NotificationActionCreator from 'services/Notifications/actions/NotificationActionCreator';
+import { Box } from '@mui/material';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Gif, GifBoxOutlined } from '@mui/icons-material';
 
 export interface IChatInputProps {
     dialogId: string;
@@ -39,10 +42,9 @@ export const ChatInput = memo((props: IChatInputProps) => {
 
     const handleSend = useCallback(async () => {
         const trimmedValue = inputRef.current?.value.trim() ?? '';
-           // eslint-disable-next-line no-console
-           console.log('trimmedValue' , trimmedValue);
+        // eslint-disable-next-line no-console
+        console.log('trimmedValue', trimmedValue);
         if (getBalance(user!) >= Config.SEND_MESSAGE_AMOUNT && trimmedValue.length > 0) {
-
             await dispatch(ChatActionCreator.sendMessage(dialogId, trimmedValue, ChatMessageTypes.MESSAGE, user!.Userid));
 
             onSend && onSend();
@@ -90,12 +92,10 @@ export const ChatInput = memo((props: IChatInputProps) => {
 
             const reader = new FileReader();
 
-
             reader.onloadend = async () => {
                 // Dispatch the action to send the file
                 await dispatch(ChatActionCreator.sendMessage(dialogId, reader.result as string, ChatMessageTypes.ZWINKER, user!.Userid));
                 onSend && onSend();
-
             };
 
             reader.readAsDataURL(file);
@@ -108,66 +108,62 @@ export const ChatInput = memo((props: IChatInputProps) => {
 
     return (
         <>
-            <article className="flex no-grow">
+            <article className="flex" style={{ alignItems: 'center' }}>
+                    <Box sx={{display:'flex'}}>
+                        {canSendIcebreaker && <IceBreakerIconButton Profilid={partnerId} Username={userName} onSend={onSend} />}
+                        {partnerId !== 'support' && (
+                            <IconButton onClick={handleFileClick}>
+                                <Icon icon={faFontCase} />
+                            </IconButton>
+                        )}
+                        {partnerId !== 'support' && (
+                            <IconButton onClick={handleFileClick}>
+                                <Icon icon={faCamera} />
+                            </IconButton>
+                        )}
+
+                        {partnerId !== 'support' && (
+                            <IconButton onClick={handleGiftsClick}>
+                                <Icon icon={faGift}/>
+                            </IconButton>
+                        )}
+                        {partnerId !== 'support' && (
+                            <IconButton onClick={handleGiftsClick}>
+                                <Gif fontSize='large'/>
+                            </IconButton>
+                        )}
+                     {/* {/<Picker onEmojiClick={onEmojiClick} />/} */}
+                </Box>
                 <TextField
                     fullWidth
-                    placeholder={CHAT_INTERFACE_SEND_A_MESSAGE}
+                    // placeholder={CHAT_INTERFACE_SEND_A_MESSAGE}
                     inputRef={inputRef}
                     type="text"
                     className="chatboxField"
+                    variant='standard'
                     onKeyPress={handleEnter}
                     onChange={handleChange}
                     disabled={partnerId === 'support' ? true : false}
-                    inputProps={{ style: { padding: 12 } }}
-                    InputProps={{
-                        style: {
-                            paddingRight: 24,
-                        },
-                        endAdornment: (
-                            <InputAdornment position="end">
-                                {canSendIcebreaker && <IceBreakerIconButton Profilid={partnerId} Username={userName} onSend={onSend} />}
-
-                                {partnerId !== 'support' && (
-                                    <IconButton onClick={handleFileClick}>
-                                        <Icon icon={faCamera} />
-                                    </IconButton>
-                                )}
-
-                                {partnerId !== 'support' && (
-                                    <IconButton onClick={handleGiftsClick}>
-                                        <Icon icon={faGift} />
-                                    </IconButton>
-                                )}
-
-                                {/*<Picker onEmojiClick={onEmojiClick} />*/}
-                            </InputAdornment>
-                        ),
-                    }}
                 />
-                <input accept="image/*, video/*" type="file" id="file-input" style={{ display: 'none' }} onChange={handleFileChange} ref={inputReff} />
+                <input
+                    accept="image/, video/"
+                    type="file"
+                    id="file-input"
+                    style={{ display: 'none' }}
+                    onChange={handleFileChange}
+                    ref={inputReff}
+                />
 
                 <IconButton
                     style={{
-                        background: Config.GLOBAL_PRIMARY_COLOR,
                         position: 'relative',
-                        marginLeft: -24,
                         marginTop: 4,
-                        width: 50,
-                        height: 50,
-                        alignSelf: 'center',
                     }}
                     onClick={handler}
                 >
-                    {inputValue.length > 0 ? (
-                        <>
-                            <Icon iconColor="#FFFFFF" icon={faPaperPlane} style={{ marginTop: -12, marginLeft: -2 }} />
-                            <Typography variant="caption" style={{ position: 'absolute', bottom: 3, color: '#fff' }}>
-                                {Config.SEND_MESSAGE_AMOUNT * coinsMulti}
-                            </Typography>
-                        </>
-                    ) : (
-                        <Icon iconColor="#FFFFFF" icon={faPaperPlane} />
-                    )}
+                    <Typography variant="caption" style={{ fontWeight: 600 }}>
+                        Senden
+                    </Typography>
                 </IconButton>
             </article>
             <ChatGiftComponent

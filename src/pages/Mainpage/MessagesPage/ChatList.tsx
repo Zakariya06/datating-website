@@ -32,12 +32,6 @@ export function ChatList({ chatMessages, user, chatPartner, isLoading }: IChatLi
     });
 
     const bubbleBackground = {
-        backgroundImage: `radial-gradient(circle at 20% 20%, ${Config.GLOBAL_PRIMARY_COLOR}20 10%, transparent 20%),
-                          radial-gradient(circle at 80% 20%, ${Config.GLOBAL_PRIMARY_COLOR}20 10%, transparent 20%),
-                          radial-gradient(circle at 50% 80%, ${Config.GLOBAL_PRIMARY_COLOR}20 10%, transparent 20%),
-                          radial-gradient(circle at 10% 50%, ${Config.GLOBAL_PRIMARY_COLOR}20 10%, transparent 20%),
-                          radial-gradient(circle at 90% 50%, ${Config.GLOBAL_PRIMARY_COLOR}20 10%, transparent 20%)`,
-        backgroundSize: '300px 300px',
         backgroundColor: isDark ? theme.palette.background.default : '#ffffff',
     };
 
@@ -62,7 +56,7 @@ export function ChatList({ chatMessages, user, chatPartner, isLoading }: IChatLi
             )}
             {groupedMessages.map(({ date, messages }) => (
                 <Fragment key={date}>
-                    <ChatDateTag date={formatCaptionDateString(date)} />
+                    {/* <ChatDateTag date={formatCaptionDateString(date)} /> */}
                     {messages.map((message) => (
                         <ChatMessage
                             key={message.datetime}

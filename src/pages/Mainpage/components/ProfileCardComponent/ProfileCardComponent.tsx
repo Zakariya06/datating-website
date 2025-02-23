@@ -178,7 +178,7 @@ export const ProfileCardComponent = memo((props: IProfileCardComponentProps) => 
             </ImageContainer>
 
             <ContentContainer  className='cardContentContainer' >
-                <div className={`flex column ${Unlocked ? '' : 'blur'} `}>
+                <div className={`flex column ${Unlocked ? '' : 'blur'}`}>
                     <Typography
                         variant="h6"
                         style={{
@@ -188,11 +188,11 @@ export const ProfileCardComponent = memo((props: IProfileCardComponentProps) => 
                         }}
                         className='cardTitleHeading'
                     >
-                        {Username} {verified}
+                        {Username}, {user.MinAge}
                         {IsOnline && <Circle sx={{ color: '#19cea4', fontSize: '.7em', marginLeft: 0.5 }} />}
                     </Typography>
 
-                    <Typography
+                    {/* <Typography
                         variant="body2"
                         className='cityText'
                         style={{
@@ -202,7 +202,7 @@ export const ProfileCardComponent = memo((props: IProfileCardComponentProps) => 
                         }}
                     >
                         {City}  
-                    </Typography>
+                    </Typography> */}
                 </div>
 
                 <div className="flex justify-center gap-3 mt-2 socialIcon">

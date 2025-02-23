@@ -1,5 +1,5 @@
 import { faStar } from '@fortawesome/free-solid-svg-icons';
-import { Badge, Box, Tab, Tabs } from '@material-ui/core';
+import { Badge, Box, Tab, Tabs, useMediaQuery } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import React, { memo, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
@@ -24,6 +24,8 @@ export const ChatOverview = memo((props: IChatOverviewProps) => {
     const { FAVORITE_CHATS, FAVORITE_FAVORITES, FAVORITE_STARS } = useTranslation();
     const [value, setValue] = useState<number>(0);
     const handleChange = useCallback((event: React.ChangeEvent<{}>, newValue: number) => setValue(newValue), []);
+    const isMobile = useMediaQuery('(max-width:430px)', { defaultMatches: true });
+    
 
     useEffect(() => {
         if (selectedDialog?.isFavorite) {
@@ -54,8 +56,9 @@ export const ChatOverview = memo((props: IChatOverviewProps) => {
     );
 
     return (
-        <div className="flex column no-grow" style={{ minWidth: 315 }}>
-            <div
+        <div className="flex column no-grow" style={{ minWidth:isMobile ? '100%' : 315 }}>
+            {
+                isMobile ?null :<div
                 className="flex no-grow align-items-center"
                 style={{ paddingTop: 16, minHeight: 64, background: type === 'light' ? 'white' : 'black' }}
             >
@@ -89,6 +92,8 @@ export const ChatOverview = memo((props: IChatOverviewProps) => {
                     />
                 </Tabs>
             </div>
+            }
+            
 
             <div className="flex column" style={{ width: '100%', position: 'relative', marginTop: 4 }}>
                 <ChatOverviewList
@@ -98,7 +103,8 @@ export const ChatOverview = memo((props: IChatOverviewProps) => {
                     offen={selectedDialog?.offen}
                 />
             </div>
-            <div
+            {
+                isMobile ? null :   <div
                 style={{ backgroundColor: Config.GLOBAL_PRIMARY_COLOR }}
                 onClick={openPurchaseStarsDialog}
                 className="flex justify-content-space-between align-items-center full-width sternenkonto pointer"
@@ -112,6 +118,8 @@ export const ChatOverview = memo((props: IChatOverviewProps) => {
                     <Icon iconColor="#fdd932" icon={faStar} className="spacing margin left" />
                 </div>
             </div>
+            }
+          
         </div>
     );
 });

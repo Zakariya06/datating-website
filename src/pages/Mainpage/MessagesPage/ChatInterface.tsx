@@ -1,5 +1,4 @@
 import './ChatInterface.scss';
-
 import { faBars, faEllipsisV, faStar } from '@fortawesome/pro-light-svg-icons';
 import { faStar as faStarFilled } from '@fortawesome/pro-solid-svg-icons';
 import { Avatar, Divider, IconButton, Typography, useMediaQuery } from '@material-ui/core';
@@ -23,19 +22,19 @@ import ChatList from './ChatList';
 import ChatOptionsMenu from './ChatOptionsMenu/ChatOptionsMenu';
 import PurchaseStarsDialog from './PurchaseStarsDialog';
 import { UnsetFavoritDialog } from './UnsetFavoritDialog/UnsetFavoritDialog';
-import { Circle } from '@mui/icons-material';
+import { Circle, KeyboardBackspace } from '@mui/icons-material';
 import ThemeContext from 'theme/ThemeContext';
 
 export interface IChatInterfaceProps {
     dialog: IDialog;
     openDrawer(): void;
+    isChatOpen?():void
 }
 
 export function ChatInterface(props: IChatInterfaceProps) {
-    const { dialog, openDrawer } = props;
+    const { dialog, openDrawer,isChatOpen } = props;
     const [anchorElOptions, setAnchorElOptions] = useState<null | HTMLElement>(null);
     const [loading, setLoading] = useState<boolean>(true);
-
     const [openPurchaseStarsDialog, setOpenPurchaseStarsDialog] = useState<boolean>(false);
     const [openUnsetFavoritDialog, setOpenUnsetFavoritDialog] = useState<boolean>(false);
 
@@ -49,6 +48,7 @@ export function ChatInterface(props: IChatInterfaceProps) {
     const { photo, age, name, id, unread, isOnline } = partner ?? {};
 
     const isDesktop = useMediaQuery('(min-width:900px)', { defaultMatches: true });
+    const isMobile = useMediaQuery('(max-width:430px)', { defaultMatches: true });
 
     const handleOptionsOpen = useCallback((event: React.MouseEvent<HTMLElement>) => setAnchorElOptions(event.currentTarget), []);
     const handleOptionsClose = useCallback(() => setAnchorElOptions(null), []);
@@ -139,53 +139,90 @@ export function ChatInterface(props: IChatInterfaceProps) {
                         padding: '16px',
                     }}
                 >
-                    {!isDesktop && (
+                    {isMobile ? (
                         <div>
-                            <IconButton onClick={openDrawer} style={{ color: '#495057' }}>
-                                <Icon icon={faBars} />
+                            <IconButton onClick={isChatOpen} style={{ color: '#495057' }}>
+                                <KeyboardBackspace />
                             </IconButton>
+                        </div>
+                    ) : null}
+
+                    {isMobile ? (
+                        <div
+                            className="flex chat-name"
+                            onClick={handleUserClick}
+                            style={{ cursor: 'pointer', justifyContent: 'space-between', alignItems: 'center', display: 'flex' }}
+                        >
+                            <div
+                                style={{
+                                    marginLeft: 12,
+                                    color: '#495057',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    margin: 'auto',
+                                    flexDirection: 'column',
+                                }}
+                            >
+                                <Typography style={{ fontWeight: 600, fontSize: '1.1rem' }} variant="h6">
+                                    {`${name}`}
+                                </Typography>
+                                <br />
+                                <div style={{ marginTop: '-25px' }}>
+                                    {isOnline ? (
+                                        <Typography style={{ color: '#19cea4', fontSize: '.8em' }}>jetzt Online</Typography>
+                                    ) : (
+                                        <Typography style={{ color: '#ff6b6b', fontSize: '.8em' }}>jetzt Offline</Typography>
+                                    )}
+                                </div>
+                            </div>
+                            <Avatar src={generateValidUrl(photo)} style={{ width: 40, height: 40, borderRadius: 50 }} />
+                        </div>
+                    ) : (
+                        <div className="flex chat-name" onClick={handleUserClick} style={{ cursor: 'pointer' }}>
+                            <Avatar src={generateValidUrl(photo)} style={{ overflow: 'visible', width: 40, height: 40 }} />
+                            <div style={{ marginLeft: 12, color: '#495057', display: 'flex', alignItems: 'center' }}>
+                                <Typography style={{ fontWeight: 600, fontSize: '1.1rem' }} variant="h6">
+                                    {`${name}${age ? ` | ${age}` : ''}`}
+                                </Typography>
+                                <span style={{ marginLeft: 8 }}>
+                                    {isOnline ? (
+                                        <Circle sx={{ color: '#19cea4', fontSize: '.8em' }} />
+                                    ) : (
+                                        <Circle sx={{ color: '#ff6b6b', fontSize: '.8em' }} />
+                                    )}
+                                </span>
+                            </div>
                         </div>
                     )}
-                    <div className="flex chat-name" onClick={handleUserClick} style={{ cursor: 'pointer' }}>
-                        <Avatar src={generateValidUrl(photo)} style={{ overflow: 'visible', width: 40, height: 40 }} />
-                        <div style={{ marginLeft: 12, color: '#495057', display: 'flex', alignItems: 'center' }}>
-                            <Typography style={{ fontWeight: 600, fontSize: '1.1rem' }} variant="h6">
-                                {`${name}${age ? ` | ${age}` : ''}`}
-                            </Typography>
-                            <span style={{ marginLeft: 8 }}>
-                                {isOnline ? (
-                                    <Circle sx={{ color: '#19cea4', fontSize: '.8em' }} />
-                                ) : (
-                                    <Circle sx={{ color: '#ff6b6b', fontSize: '.8em' }} />
-                                )}
-                            </span>
-                        </div>
-                    </div>
-                    {id !== 'support' && (
+                    {isMobile ? null : (
                         <>
-                            <IconButton
-                                style={{
-                                    backgroundColor: isFavorite ? '#fdd932' : '#e9ecef',
-                                    marginRight: 10,
-                                    borderRadius: '8px',
-                                    transition: 'background-color 0.3s ease',
-                                }}
-                                onClick={isFavorite ? handleOpenUnsetFavoritDialog : setFavorite}
-                            >
-                                <Icon iconColor={isFavorite ? '#ffffff' : '#495057'} icon={isFavorite ? faStarFilled : faStar} />
-                            </IconButton>
+                            {id !== 'support' && (
+                                <>
+                                    <IconButton
+                                        style={{
+                                            backgroundColor: isFavorite ? '#fdd932' : '#e9ecef',
+                                            marginRight: 10,
+                                            borderRadius: '8px',
+                                            transition: 'background-color 0.3s ease',
+                                        }}
+                                        onClick={isFavorite ? handleOpenUnsetFavoritDialog : setFavorite}
+                                    >
+                                        <Icon iconColor={isFavorite ? '#ffffff' : '#495057'} icon={isFavorite ? faStarFilled : faStar} />
+                                    </IconButton>
 
-                            <IconButton
-                                style={{
-                                    backgroundColor: '#e9ecef',
-                                    marginRight: 10,
-                                    borderRadius: '8px',
-                                    transition: 'background-color 0.3s ease',
-                                }}
-                                onClick={handleOptionsOpen}
-                            >
-                                <Icon icon={faEllipsisV} />
-                            </IconButton>
+                                    <IconButton
+                                        style={{
+                                            backgroundColor: '#e9ecef',
+                                            marginRight: 10,
+                                            borderRadius: '8px',
+                                            transition: 'background-color 0.3s ease',
+                                        }}
+                                        onClick={handleOptionsOpen}
+                                    >
+                                        <Icon icon={faEllipsisV} />
+                                    </IconButton>
+                                </>
+                            )}
                         </>
                     )}
                 </section>
@@ -244,4 +281,3 @@ export function ChatInterface(props: IChatInterfaceProps) {
 }
 
 export default ChatInterface;
-
